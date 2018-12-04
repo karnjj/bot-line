@@ -1,37 +1,19 @@
-import os, re, json
-from datetime import datetime, date, timedelta
 from flask import Flask, request, abort
-import requests
-from linebot import (
-    LineBotApi, WebhookHandler
-)
-from linebot.exceptions import (
-    InvalidSignatureError
-)
-from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
-)
+from linebot import (LineBotApi, WebhookHandler)
+from linebot.exceptions import (InvalidSignatureError)
+from linebot.models import (MessageEvent, TextMessage, TextSendMessage,)
 
 app = Flask(__name__)
 
-channel_secret = "375be5ebbd4428a657ecd629c07e2beb"
-channel_access_token = "1627395536"
+line_bot_api = LineBotApi('o14KQyuIIqKfmAdR9b+oat4z8A7nKRtWjMdIaGSjGl6vuxc8Ot85rGSEAFWVVOeS+OWiQGTjFH7IAf7hBiRU+2txbde+ZNaJHEXIv6B59aZRXotzbvXiXhk4Py9rpfyg6/LJlMQFvkPBrF+s8SUKLAdB04t89/1O/w1cDnyilFU=')
+handler = WebhookHandler('375be5ebbd4428a657ecd629c07e2beb')
 
-line_bot_api = LineBotApi(channel_access_token)
-handler = WebhookHandler(channel_secret)
+@app.route("/")
+def hello():
+    return "Hello World!"
 
-@app.route('/')
-def homepage():
-    the_time = datetime.now().strftime("%A, %d %b %Y %l:%M %p")
-
-    return """
-    <h1>Hello Translator-Bot</h1>
-    <p>It is currently {time}.</p>
-    <img src="http://loremflickr.com/600/400">
-    """.format(time=the_time)
-
-@app.route("/callback", methods=['POST'])
-def callback():
+@app.route("/webhook", methods=['POST'])
+def webhook():
     # get X-Line-Signature header value
     signature = request.headers['X-Line-Signature']
 
@@ -46,14 +28,14 @@ def callback():
         abort(400)
 
     return 'OK'
+    
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    text = event.message.text
     line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=text))
-    
+        event.reply_token,
+        TextSendMessage(text=event.message.text))
+
 
 if __name__ == "__main__":
-    app.run(debug=True, use_reloader=True)
+	app.run()
