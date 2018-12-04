@@ -3,6 +3,7 @@ from linebot import (LineBotApi, WebhookHandler)
 from linebot.exceptions import (InvalidSignatureError)
 from linebot.models import (MessageEvent, TextMessage, TextSendMessage,)
 import paho.mqtt.client as mqtt , os
+import time
 
 # Define event callbacks
 def on_connect(client, userdata, flags, rc):
@@ -64,9 +65,6 @@ def handle_message(event):
 	mqttc.connect('m15.cloudmqtt.com',  17711 )
 	mqttc.subscribe("/test2", 0)
 	text=event.message.text
-	line_bot_api.reply_message(
-		event.reply_token,
-		TextSendMessage(text))
 	mqttc.publish("/test1", text)
 	line_bot_api.reply_message(
 		event.reply_token,
@@ -74,3 +72,6 @@ def handle_message(event):
 
 if __name__ == "__main__":
 	app.run()
+	line_bot_api.reply_message(
+		event.reply_token,
+		TextSendMessage("5555"))
