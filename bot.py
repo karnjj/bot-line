@@ -70,12 +70,14 @@ def webhook():
 def handle_message(event):
 	global temp 
 	temp = event
+	'''
 	mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
 	mqttc.connect('m15.cloudmqtt.com',  17711 )
 	mqttc.subscribe("/test2", 0)
+	'''
 	text=event.message.text
 	mqttc.publish("/test1", text)
-	mqttc.loop_forever(max_packets=1)
+	mqttc.loop_forever()
 
 
 if __name__ == "__main__":
