@@ -5,14 +5,16 @@ from linebot.models import (MessageEvent, TextMessage, TextSendMessage,)
 
 app = Flask(__name__)
 
-line_bot_api = LineBotApi('1627395536')
-handler = WebhookHandler('375be5ebbd4428a657ecd629c07e2beb')
+line_bot_api = LineBotApi(1627395536)
+handler = WebhookHandler(375be5ebbd4428a657ecd629c07e2beb)
+
 
 @app.route("/")
+@app.route("/webhook", methods=['POST'])
+
 def hello():
     return "Hello World!"
 
-@app.route("/webhook", methods=['POST'])
 def webhook():
     # get X-Line-Signature header value
     signature = request.headers['X-Line-Signature']
