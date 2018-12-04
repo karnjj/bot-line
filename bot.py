@@ -2,8 +2,7 @@ from flask import Flask, request, abort
 from linebot import (LineBotApi, WebhookHandler)
 from linebot.exceptions import (InvalidSignatureError)
 from linebot.models import (MessageEvent, TextMessage, TextSendMessage,)
-import paho.mqtt.client as mqtt
-import os, urlparse
+import paho.mqtt.client as mqtt , os
 
 # Define event callbacks
 def on_connect(client, userdata, flags, rc):
@@ -28,14 +27,11 @@ mqttc.on_connect = on_connect
 mqttc.on_publish = on_publish
 mqttc.on_subscribe = on_subscribe
 
-url_str = os.environ.get('mqtt://brsiutlc:Rw4rcSFm_gCL@m15.cloudmqtt.com:17711/test')
-url = urlparse.urlparse(url_str)
-topic = url.path[1:] or 'test'
 
-mqttc.username_pw_set(url.username, url.password)
-mqttc.connect(url.hostname, url.port)
+mqttc.username_pw_set("brsiutlc", " Rw4rcSFm_gCL ")
+mqttc.connect("m15.cloudmqtt.com",  17711 )
 
-mqttc.subscribe(topic, 0)
+mqttc.subscribe("/test", 0)
 
 
 app = Flask(__name__)
@@ -69,7 +65,7 @@ def handle_message(event):
 	line_bot_api.reply_message(
 		event.reply_token,
 		TextSendMessage(text))
-	mqttc.publish(topic, text)
+	mqttc.publish("/test", text)
 
 if __name__ == "__main__":
 	app.run()
