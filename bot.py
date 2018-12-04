@@ -75,7 +75,10 @@ def handle_message(event):
 	mqttc.subscribe("/test2", 0)
 	text=event.message.text
 	mqttc.publish("/test1", text)
-	#mqttc.loop_forever()
+	line_bot_api.reply_message(
+		temp.reply_token,
+		TextSendMessage("Wait a minute"))
+	mqttc.loop_forever()
 
 
 if __name__ == "__main__":
