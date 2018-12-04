@@ -17,7 +17,7 @@ def on_message(client, obj, msg):
     line_bot_api.reply_message(
 		temp.reply_token,
 		TextSendMessage(str(msg.payload)))
-    #disconnect()
+    disconnect()
 
 def on_publish(client, obj, mid):
     print("mid: " + str(mid))
@@ -70,14 +70,10 @@ def webhook():
 def handle_message(event):
 	global temp 
 	temp = event
-	'''
-	mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
-	mqttc.connect('m15.cloudmqtt.com',  17711 )
-	mqttc.subscribe("/test2", 0)
-	'''
+	reconnect()
 	text=event.message.text
 	mqttc.publish("/test1", text)
-	mqttc.loop_forever()
+	mqttc.loop_forever(max_packets=1)
 
 
 if __name__ == "__main__":
