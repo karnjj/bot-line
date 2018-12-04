@@ -28,8 +28,8 @@ mqttc.on_publish = on_publish
 mqttc.on_subscribe = on_subscribe
 
 
-mqttc.username_pw_set("brsiutlc", " Rw4rcSFm_gCL")
-mqttc.connect("m15.cloudmqtt.com",  17711 )
+mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
+mqttc.connect('m15.cloudmqtt.com',  17711 )
 
 mqttc.subscribe("\test", 0)
 
