@@ -75,7 +75,7 @@ def handle_message(event):
 	mqttc.subscribe("/test2", 0)
 	text=event.message.text
 	mqttc.publish("/test1", text)
-	mqttc.loop_forever(timeout=1.0, max_packets=1, retry_first_connection=False)
+	mqttc.loop_forever(max_packets=1)
 
 
 if __name__ == "__main__":
