@@ -15,7 +15,6 @@ futures==3.1.1
 gast==0.2.0
 grpcio==1.16.1
 gunicorn==19.9.0
-gyp==0.1
 h5py==2.8.0
 idna==2.6
 ipaddress==1.0.17
