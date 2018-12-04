@@ -31,7 +31,7 @@ mqttc.on_subscribe = on_subscribe
 mqttc.username_pw_set("brsiutlc", " Rw4rcSFm_gCL")
 mqttc.connect("m15.cloudmqtt.com",  17711 )
 
-mqttc.subscribe("/test", 0)
+mqttc.subscribe("\test", 0)
 
 
 app = Flask(__name__)
@@ -65,7 +65,7 @@ def handle_message(event):
 	line_bot_api.reply_message(
 		event.reply_token,
 		TextSendMessage(text))
-	mqttc.publish("/test", text)
+	mqttc.publish("\test", text)
 
 if __name__ == "__main__":
 	app.run()
