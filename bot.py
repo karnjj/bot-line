@@ -26,16 +26,15 @@ def webhook():
         handler.handle(body, signature)
     except InvalidSignatureError:
         abort(400)
-
     return "OK"
     
-
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text))
-
+	text=event.message.text
+	if text == 'karn' :		
+		line_bot_api.reply_message(
+			event.reply_token,
+			TextSendMessage('Hello karn!!'))
 
 if __name__ == "__main__":
 	app.run()
