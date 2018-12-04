@@ -1,5 +1,7 @@
+import os, re, json
+from datetime import datetime, date, timedelta
 from flask import Flask, request, abort
-
+import requests
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -12,9 +14,21 @@ from linebot.models import (
 
 app = Flask(__name__)
 
-line_bot_api = LineBotApi('1627395536')
-handler = WebhookHandler('375be5ebbd4428a657ecd629c07e2beb')
+channel_secret = os.getenv('LINE_CHANNEL_SECRET', None)
+channel_access_token = os.getenv('LINE_CHANNEL_ACCESS_TOKEN', None)
 
+line_bot_api = LineBotApi(channel_access_token)
+handler = WebhookHandler(channel_secret)
+
+@app.route('/')
+def homepage():
+    the_time = datetime.now().strftime("%A, %d %b %Y %l:%M %p")
+
+    return """
+    <h1>Hello Translator-Bot</h1>
+    <p>It is currently {time}.</p>
+    <img src="http://loremflickr.com/600/400">
+    """.format(time=the_time)
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -31,15 +45,15 @@ def callback():
     except InvalidSignatureError:
         abort(400)
 
-    return "OK"
-
+    return 'OK'
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    text = event.message.text
     line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text))
-
+            event.reply_token,
+            TextSendMessage(text=text))
+    
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True, use_reloader=True)
