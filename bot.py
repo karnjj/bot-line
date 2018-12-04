@@ -17,7 +17,7 @@ def on_message(client, obj, msg):
     line_bot_api.reply_message(
 		temp.reply_token,
 		TextSendMessage(str(msg.payload)))
-    disconnect()
+    #disconnect()
 
 def on_publish(client, obj, mid):
     print("mid: " + str(mid))
