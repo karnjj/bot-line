@@ -17,7 +17,7 @@ def on_message(client, obj, msg):
     line_bot_api.reply_message(
 		temp.reply_token,
 		TextSendMessage(str(msg.payload)))
-    disconnect()
+    mqtcc.disconnect()
 
 def on_publish(client, obj, mid):
     print("mid: " + str(mid))
@@ -38,7 +38,7 @@ mqttc.on_subscribe = on_subscribe
 
 mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
 mqttc.connect('m15.cloudmqtt.com',  17711 )
-mqttc.subscribe("/test", 0)
+mqttc.subscribe("/test2", 0)
 
 
 app = Flask(__name__)
@@ -70,10 +70,12 @@ def webhook():
 def handle_message(event):
 	global temp 
 	temp = event
-	reconnect()
+	mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
+	mqttc.connect('m15.cloudmqtt.com',  17711 )
+	mqttc.subscribe("/test2", 0)
 	text=event.message.text
 	mqttc.publish("/test1", text)
-	mqttc.loop_forever(max_packets=1)
+	mqttc.loop_forever()
 
 
 if __name__ == "__main__":
