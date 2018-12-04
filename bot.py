@@ -78,6 +78,9 @@ def handle_message(event):
 	line_bot_api.reply_message(
 		temp.reply_token,
 		TextSendMessage("Wait a minute"))
+	line_bot_api.reply_message(
+		temp.reply_token,
+		TextSendMessage("please"))
 	mqttc.loop_forever()
 
 
