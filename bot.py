@@ -5,12 +5,18 @@ from linebot.models import (MessageEvent, TextMessage, TextSendMessage,)
 import paho.mqtt.client as mqtt , os
 import time
 
+global temp
+
 # Define event callbacks
 def on_connect(client, userdata, flags, rc):
     print("rc: " + str(rc))
 
 def on_message(client, obj, msg):
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
+    line_bot_api.reply_message(
+		temp.reply_token,
+		TextSendMessage("5555"))
+    disconnect()
 
 def on_publish(client, obj, mid):
     print("mid: " + str(mid))
@@ -61,14 +67,14 @@ def webhook():
     
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+	temp = event
 	mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
 	mqttc.connect('m15.cloudmqtt.com',  17711 )
 	mqttc.subscribe("/test2", 0)
 	text=event.message.text
 	mqttc.publish("/test1", text)
-	line_bot_api.reply_message(
-		event.reply_token,
-		TextSendMessage(str(msg.payload)))
+	mqttc.loop_forever()
+
 
 if __name__ == "__main__":
 	app.run()
