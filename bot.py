@@ -3,7 +3,7 @@ from linebot import (LineBotApi, WebhookHandler)
 from linebot.exceptions import (InvalidSignatureError)
 from linebot.models import (MessageEvent, TextMessage, TextSendMessage,)
 import paho.mqtt.client as mqtt
-import time
+import json
 
 
 
@@ -18,8 +18,10 @@ def on_message(client, obj, msg):
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
     line_bot_api.reply_message(
 		temp.reply_token,
-		TextSendMessage("4444"))
-    mqttc.loop_stop()
+		TextSendMessage(
+			m_in["temp"]+"\n"+m_in["humi"]+"\n"+
+			bool(m_in["soil"])+"\n"+m_in["lumi"]))
+    mqttc.disconnect()
 
 def on_publish(client, obj, mid):
     print("mid: " + str(mid))
