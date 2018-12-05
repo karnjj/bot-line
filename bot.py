@@ -77,7 +77,7 @@ def handle_message(event):
 	mqttc.publish("/test1", text)
 	line_bot_api.reply_message(
 		temp.reply_token,
-		"hello\nworld")
+		TextSendMessage("hello\nworld"))
 	#mqttc.loop_forever()
 
 
