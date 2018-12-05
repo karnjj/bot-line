@@ -15,10 +15,10 @@ def on_message(client, obj, msg):
     global temp
     m_in=json.loads(msg.payload)
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
-    print(m_in["temp"])
+    print("TEMP : {0}\nHUMI : {1}\nSOIL : {2}\nLUMI : {3}" .format(str(m_in["temp"]),str(m_int["humi"]),str(m_in["mois"]),str(m_in["lumi"]))0)
     line_bot_api.reply_message(
 		temp.reply_token,
-		TextSendMessage("TEMP : {0}\nHUMI : {1}\nSOIL : {2}\nLUMI : {3}" .format(m_in["temp"],m_int["humi"],m_in["mois"],m_in["lumi"])))
+		TextSendMessage("TEMP : {0}\nHUMI : {1}\nSOIL : {2}\nLUMI : {3}" .format(str(m_in["temp"]),str(m_int["humi"]),str(m_in["mois"]),str(m_in["lumi"]))))
     mqttc.disconnect()
 
 def on_publish(client, obj, mid):
