@@ -18,7 +18,7 @@ def on_message(client, obj, msg):
     txt = str(m_in["temp"]) + " " + str(m_in["humi"]) + " " + str(bool(m_in["mois"]))
     line_bot_api.reply_message(
 		temp.reply_token,
-		TextSendMessage("TEMP\t: {0:2d} C\nHUMI\t: {1:2d} %\nMOISt: {2}\nLUMI\t: {3:2d}" .format(int(m_in["temp"]),int(m_in["humi"]),str(bool(m_in["mois"])),int(m_in["lumi"]))))
+		TextSendMessage("TEMP\t: {0:2d} C\nHUMI\t\t: {1:2d} %\nMOIS\t: {2}\nLUMI\t\t: {3:2d}" .format(int(m_in["temp"]),int(m_in["humi"]),str(bool(m_in["mois"])),int(m_in["lumi"]))))
     mqttc.disconnect()
 
 def on_publish(client, obj, mid):
