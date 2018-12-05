@@ -17,7 +17,7 @@ def on_message(client, obj, msg):
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
     line_bot_api.reply_message(
 		temp.reply_token,
-		TextSendMessage("55555")
+		TextSendMessage("55555"))
     mqttc.disconnect()
 
 def on_publish(client, obj, mid):
