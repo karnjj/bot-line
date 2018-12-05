@@ -2,7 +2,7 @@ from flask import Flask, request, abort
 from linebot import (LineBotApi, WebhookHandler)
 from linebot.exceptions import (InvalidSignatureError)
 from linebot.models import (MessageEvent, TextMessage, TextSendMessage,)
-import paho.mqtt.client as mqtt , os
+import paho.mqtt.client as mqtt
 import time
 
 
@@ -13,11 +13,15 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, obj, msg):
     global temp
-    print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
+    m_decode=str(msg.payload.decode("utf-8","ignore"))
+    m_in=json.loads(m_decode)
+    #print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
     line_bot_api.reply_message(
 		temp.reply_token,
-		TextSendMessage(str(msg.payload)))
-    mqtcc.disconnect()
+		TextSendMessage(
+			m_in["temp"]+"\n"+m_in["humi"]+"\n"+
+			bool(m_in["soil"])+"\n"+m_in["lumi"]+"\n"))
+    mqttc.loop_stop()
 
 def on_publish(client, obj, mid):
     print("mid: " + str(mid))
@@ -78,8 +82,8 @@ def handle_message(event):
 	line_bot_api.reply_message(
 		temp.reply_token,
 		TextSendMessage("hello\nworld"))
-	#mqttc.loop_forever()
-
+	mqttc.loop_start()
+	
 
 if __name__ == "__main__":
 	app.run()
