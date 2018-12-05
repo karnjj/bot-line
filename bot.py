@@ -15,7 +15,7 @@ def on_message(client, obj, msg):
     global temp
     m_in=json.loads(msg.payload)
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
-    txt = str(m_in["temp"]) + " " + str(m_in["humi"]) + " " + bool(m_in["mois"])
+    txt = str(m_in["temp"]) + " " + str(m_in["humi"]) + " " + str(bool(m_in["mois"]))
     line_bot_api.reply_message(
 		temp.reply_token,
 		TextSendMessage(txt))
