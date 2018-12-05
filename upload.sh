@@ -1,5 +1,5 @@
 #!/bin/bash
-echob "start"
+echo "start"
 git add . 
 git commit -am "make it better"
 git push heroku master
