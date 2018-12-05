@@ -13,8 +13,7 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, obj, msg):
     global temp
-    m_decode=str(msg.payload.decode("utf-8","ignore"))
-    m_in=json.loads(m_decode)
+    m_in=json.loads(msg.payload)
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
     line_bot_api.reply_message(
 		temp.reply_token,
