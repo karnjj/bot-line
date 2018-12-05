@@ -79,13 +79,13 @@ def handle_message(event):
 	if text == "Check":
 		mqttc.publish("/test1", text)
 		mqttc.loop_forever()
-	elif text == "help":
+	elif text == "Help":
 		line_bot_api.reply_message(
 			temp.reply_token,
 			TextSendMessage("There is 1 function\nCheck"))
 
 	else:
-		txt = "NO function name '" + text + "'"
+		txt = "No function name '" + text + "'"
 		line_bot_api.reply_message(
 			temp.reply_token,[
 			TextSendMessage(txt),
