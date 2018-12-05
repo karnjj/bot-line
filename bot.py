@@ -15,11 +15,11 @@ def on_message(client, obj, msg):
     global temp
     m_decode=str(msg.payload.decode("utf-8","ignore"))
     m_in=json.loads(m_decode)
-    #print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
+    print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
     line_bot_api.reply_message(
 		temp.reply_token,
 		TextSendMessage("4444"))
-    mqttc.loop_stop()
+    mqttc.disconnect()
 
 def on_publish(client, obj, mid):
     print("mid: " + str(mid))
