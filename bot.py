@@ -18,7 +18,7 @@ def on_message(client, obj, msg):
     print(m_in["temp"])
     line_bot_api.reply_message(
 		temp.reply_token,
-		TextSendMessage(m_in["temp"]+"\n5555"+))
+		TextSendMessage("TEMP : {0}\nHUMI : {1}\nSOIL : {2}\nLUMI : {3}".format(m_in["temp"],m_int["humi"],m_in["soil"],m_in["lumi"])))
     mqttc.disconnect()
 
 def on_publish(client, obj, mid):
