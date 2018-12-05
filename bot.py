@@ -17,7 +17,8 @@ def on_message(client, obj, msg):
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
     line_bot_api.reply_message(
 		temp.reply_token,
-		TextSendMessage("55555"))
+		TextSendMessage(m_in["temp"]+"\n"+m_in["humi"]+"\n"+
+			bool(m_in["soil"])+"\n"+m_in["lumi"]))
     mqttc.disconnect()
 
 def on_publish(client, obj, mid):
@@ -76,7 +77,7 @@ def handle_message(event):
 	mqttc.subscribe("/test2", 0)
 	text=event.message.text
 	mqttc.publish("/test1", text)
-	mqttc.loop_forever()
+	mqttc.loop_start()
 	
 
 if __name__ == "__main__":
