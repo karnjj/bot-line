@@ -18,9 +18,7 @@ def on_message(client, obj, msg):
     #print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
     line_bot_api.reply_message(
 		temp.reply_token,
-		TextSendMessage(
-			m_in["temp"]+"\n"+m_in["humi"]+"\n"+
-			bool(m_in["soil"])+"\n"+m_in["lumi"]+"\n"))
+		TextSendMessage(m_in["humi"]))
     mqttc.loop_stop()
 
 def on_publish(client, obj, mid):
