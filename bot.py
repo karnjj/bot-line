@@ -15,10 +15,10 @@ def on_message(client, obj, msg):
     global temp
     m_in=json.loads(msg.payload)
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
+    print(m_in["temp"])
     line_bot_api.reply_message(
 		temp.reply_token,
-		TextSendMessage(m_in["temp"]+"\n"+m_in["humi"]+"\n"+
-			bool(m_in["soil"])+"\n"+m_in["lumi"]))
+		TextSendMessage(m_in["temp"]))
     mqttc.disconnect()
 
 def on_publish(client, obj, mid):
