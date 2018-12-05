@@ -6,7 +6,6 @@ import paho.mqtt.client as mqtt
 import json
 
 
-
 # Define event callbacks
 def on_connect(client, userdata, flags, rc):
     print("rc: " + str(rc))
@@ -67,10 +66,10 @@ def webhook():
     except InvalidSignatureError:
         abort(400)
     return "OK"
-    
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-	global temp 
+	global temp
 	temp = event
 	mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
 	mqttc.connect('m15.cloudmqtt.com',  17711 )
