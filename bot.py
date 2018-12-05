@@ -81,14 +81,15 @@ def handle_message(event):
 		mqttc.loop_forever()
 	elif text == "help":
 		line_bot_api.reply_message(
-			temp.reply_token,[
-			TextSendMessage("There is 1 function"),
-			TextSendMessage("Check")])
+			temp.reply_token,
+			TextSendMessage("There is 1 function\nCheck"))
 
 	else:
+		txt = "NO function name '" + text + "'"
 		line_bot_api.reply_message(
-			temp.reply_token,
-			TextSendMessage("Please try again!!"))
+			temp.reply_token,[
+			TextSendMessage(txt),
+			TextSendMessage("Please try again!!")])
 
 if __name__ == "__main__":
 	app.run()
