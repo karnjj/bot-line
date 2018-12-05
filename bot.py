@@ -19,7 +19,7 @@ def on_message(client, obj, msg):
     line_bot_api.reply_message(
 		temp.reply_token,
 		TextSendMessage("4444"))
-    mqttc.disconnect()
+    mqttc.loop_stop()
 
 def on_publish(client, obj, mid):
     print("mid: " + str(mid))
@@ -77,7 +77,7 @@ def handle_message(event):
 	mqttc.subscribe("/test2", 0)
 	text=event.message.text
 	mqttc.publish("/test1", text)
-	mqttc.loop_forever()
+	mqttc.loop_start()
 	
 
 if __name__ == "__main__":
