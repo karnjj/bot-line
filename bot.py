@@ -74,7 +74,7 @@ def handle_message(event):
 	mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
 	mqttc.connect('m15.cloudmqtt.com',  17711 )
 	mqttc.subscribe("/test2", 0)
-	text=event.message.text
+	text = event.message.text
 	text = text.splitlines()
 	print (text[0])
 	if text[0] == "Check":
@@ -85,11 +85,11 @@ def handle_message(event):
 			temp.reply_token,
 			TextSendMessage("There is 1 function\nCheck"))
 	elif text[0] == "Edit":
-		line_bot_api.reply_message(
-			temp.reply_token,
-			TextSendMessage("YES"))
+		broker_out = {"humi":text[1], "temp":text[2], "mois":text[3], "lumi":text[4]}
+		data_out = json.dumps(broker_out)
+		mqttc.publish("/test1", data_out)
 	else:
-		txt = "No function name '" + text + "'"
+		txt = "No function name '" + event.message.text + "'"
 		line_bot_api.reply_message(
 			temp.reply_token,[
 			TextSendMessage(txt),
