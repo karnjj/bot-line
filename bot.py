@@ -83,7 +83,7 @@ def handle_message(event):
 	elif text[0] == "help":
 		line_bot_api.reply_message(
 			temp.reply_token,
-			TextSendMessage("There is 1 function\nCheck"))
+			TextSendMessage("There are : \nstat\nhelp\nedit"))
 	elif text[0] == "edit":
 		broker_out = {"humi":text[1], "temp":text[2], "mois":text[3], "lumi":text[4]}
 		data_out = json.dumps(broker_out)
