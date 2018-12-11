@@ -75,7 +75,7 @@ def handle_message(event):
 	mqttc.connect('m15.cloudmqtt.com',  17711 )
 	mqttc.subscribe("/test2", 0)
 	text=event.message.text
-	text.splitlines
+	text = text.splitlines()
 	print (text[0])
 	if text[0] == "Check":
 		mqttc.publish("/test1", text)
