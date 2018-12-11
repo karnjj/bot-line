@@ -76,6 +76,7 @@ def handle_message(event):
 	mqttc.subscribe("/test2", 0)
 	text=event.message.text
 	text.split("\n")
+	print (text[0])
 	if text[0] == "Check":
 		mqttc.publish("/test1", text)
 		mqttc.loop_forever()
