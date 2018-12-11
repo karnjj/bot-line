@@ -75,14 +75,15 @@ def handle_message(event):
 	mqttc.connect('m15.cloudmqtt.com',  17711 )
 	mqttc.subscribe("/test2", 0)
 	text=event.message.text
-	if text == "Check":
+	text.split("\n")
+	if text[0] == "Check":
 		mqttc.publish("/test1", text)
 		mqttc.loop_forever()
-	elif text == "Help":
+	elif text[0] == "Help":
 		line_bot_api.reply_message(
 			temp.reply_token,
 			TextSendMessage("There is 1 function\nCheck"))
-	elif text[0] == "E":
+	elif text[0] == "Edit":
 		line_bot_api.reply_message(
 			temp.reply_token,
 			TextSendMessage("YES"))
