@@ -82,7 +82,7 @@ def handle_message(event):
 		line_bot_api.reply_message(
 			temp.reply_token,
 			TextSendMessage("There is 1 function\nCheck"))
-	elif text == "T\nT":
+	elif text[0] == "E":
 		line_bot_api.reply_message(
 			temp.reply_token,
 			TextSendMessage("YES"))
