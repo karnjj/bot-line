@@ -8,26 +8,26 @@ import json
 
 # Define event callbacks
 def on_connect(client, userdata, flags, rc):
-    print("rc: " + str(rc))
+	print("rc: " + str(rc))
 
 def on_message(client, obj, msg):
-    global temp
-    m_in=json.loads(msg.payload)
-    print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
-    txt = str(m_in["temp"]) + " " + str(m_in["humi"]) + " " + str(bool(m_in["mois"]))
-    line_bot_api.reply_message(
+	global temp
+	m_in=json.loads(msg.payload)
+	print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
+	txt = str(m_in["temp"]) + " " + str(m_in["humi"]) + " " + str(bool(m_in["mois"]))
+	line_bot_api.reply_message(
 		temp.reply_token,
 		TextSendMessage("TEMP\t: {0:2d} C\nHUMI\t\t: {1:2d} %\nMOIS\t\t: {2}\nLUMI\t\t: {3:2d}" .format(int(m_in["temp"]),int(m_in["humi"]),str(bool(m_in["mois"])),int(m_in["lumi"]))))
-    mqttc.disconnect()
+	mqttc.disconnect()
 
 def on_publish(client, obj, mid):
-    print("mid: " + str(mid))
+	print("mid: " + str(mid))
 
 def on_subscribe(client, obj, mid, granted_qos):
-    print("Subscribed: " + str(mid) + " " + str(granted_qos))
+	print("Subscribed: " + str(mid) + " " + str(granted_qos))
 
 def on_log(client, obj, level, string):
-    print(string)
+	print(string)
 
 mqttc = mqtt.Client()
 # Assign event callbacks
@@ -49,23 +49,23 @@ handler = WebhookHandler('375be5ebbd4428a657ecd629c07e2beb')
 
 @app.route("/")
 def hello():
-    return "Hello World!"
+	return "Hello World!"
 
 @app.route("/webhook", methods=['POST'])
 def webhook():
-    # get X-Line-Signature header value
-    signature = request.headers['X-Line-Signature']
+	# get X-Line-Signature header value
+	signature = request.headers['X-Line-Signature']
 
-    # get request body as text
-    body = request.get_data(as_text=True)
-    app.logger.info("Request body: " + body)
+	# get request body as text
+	body = request.get_data(as_text=True)
+	app.logger.info("Request body: " + body)
 
     # handle webhook body
-    try:
-        handler.handle(body, signature)
-    except InvalidSignatureError:
-        abort(400)
-    return "OK"
+	try:
+		handler.handle(body, signature)
+	except InvalidSignatureError:
+		abort(400)
+	return "OK"
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -82,7 +82,10 @@ def handle_message(event):
 		line_bot_api.reply_message(
 			temp.reply_token,
 			TextSendMessage("There is 1 function\nCheck"))
-
+	elif text == "T\nT":
+		line_bot_api.reply_message(
+			temp.reply_token,
+			TextSendMessage("YES"))
 	else:
 		txt = "No function name '" + text + "'"
 		line_bot_api.reply_message(
