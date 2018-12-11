@@ -13,7 +13,7 @@ def on_message(client, obj, msg):
 	global temp
 	m_in=json.loads(msg.payload)
 	print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
-	txt = str(m_in["temp"]) + " " + str(m_in["humi"]) + " " + str(bool(m_in["mois"]))
+	#txt = str(m_in["temp"]) + " " + str(m_in["humi"]) + " " + str(bool(m_in["mois"]))
 	line_bot_api.reply_message(
 		temp.reply_token,
 		TextSendMessage("Temp\t: {0:2d} C\nHumi\t\t: {1:2d} %\nMois\t\t: {2}\nLigh\t\t: {3:2d}" .format(int(m_in["temp"]),int(m_in["humi"]),str(bool(m_in["mois"])),int(m_in["lumi"]))))
@@ -85,8 +85,11 @@ def handle_message(event):
 			temp.reply_token,
 			TextSendMessage("There are : \nstat -- Check the environment in side the box.\nhelp -- Well, that's how you get here.\nedit -- Assign new value to the setting."))
 	elif text[0] == "edit":
-		broker_out = {"humi":text[1], "temp":text[2], "mois":text[3], "lumi":text[4]}
-		
+		broker_out = {"humi":text[2], "temp":text[1], "mois":text[3], "lumi":text[4]}
+		line_bot_api.reply_message(
+			temp.reply_token,
+			TextSendMessage("Assign these values to be target values? (y/n)")
+		)
 		data_out = json.dumps(broker_out)
 		mqttc.publish("/test1", data_out)
 	else:
