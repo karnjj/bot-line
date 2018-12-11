@@ -5,7 +5,6 @@ from linebot.models import (MessageEvent, TextMessage, TextSendMessage,)
 import paho.mqtt.client as mqtt
 import json
 
-
 # Define event callbacks
 def on_connect(client, userdata, flags, rc):
 	print("rc: " + str(rc))
@@ -17,7 +16,7 @@ def on_message(client, obj, msg):
 	txt = str(m_in["temp"]) + " " + str(m_in["humi"]) + " " + str(bool(m_in["mois"]))
 	line_bot_api.reply_message(
 		temp.reply_token,
-		TextSendMessage("TEMP\t: {0:2d} C\nHUMI\t\t: {1:2d} %\nMOIS\t\t: {2}\nLUMI\t\t: {3:2d}" .format(int(m_in["temp"]),int(m_in["humi"]),str(bool(m_in["mois"])),int(m_in["lumi"]))))
+		TextSendMessage("Temp\t: {0:2d} C\nHumi\t\t: {1:2d} %\nMois\t\t: {2}\nLigh\t\t: {3:2d}" .format(int(m_in["temp"]),int(m_in["humi"]),str(bool(m_in["mois"])),int(m_in["lumi"]))))
 	mqttc.disconnect()
 
 def on_publish(client, obj, mid):
@@ -75,25 +74,28 @@ def handle_message(event):
 	mqttc.connect('m15.cloudmqtt.com',  17711 )
 	mqttc.subscribe("/test2", 0)
 	text = event.message.text
+	text.lower()
 	text = text.splitlines()
 	print (text[0])
-	if text[0] == "Check":
+	if text[0] == "stat":
 		mqttc.publish("/test1", text)
 		mqttc.loop_forever()
-	elif text[0] == "Help":
+	elif text[0] == "help":
 		line_bot_api.reply_message(
 			temp.reply_token,
 			TextSendMessage("There is 1 function\nCheck"))
-	elif text[0] == "Edit":
+	elif text[0] == "edit":
 		broker_out = {"humi":text[1], "temp":text[2], "mois":text[3], "lumi":text[4]}
 		data_out = json.dumps(broker_out)
 		mqttc.publish("/test1", data_out)
 	else:
-		txt = "No function name '" + event.message.text + "'"
+		txt = event.message.text + " is not a valid function name."
 		line_bot_api.reply_message(
 			temp.reply_token,[
-			TextSendMessage(txt),
-			TextSendMessage("Please try again!!")])
+				TextSendMessage(txt),
+				TextSendMessage("Please try again.")
+			]
+		)
 
 if __name__ == "__main__":
 	app.run()
