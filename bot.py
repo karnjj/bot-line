@@ -5,6 +5,8 @@ from linebot.models import (MessageEvent, TextMessage, TextSendMessage,)
 import paho.mqtt.client as mqtt
 import json
 
+_APP_VERSION_ = "beta 1.08"
+
 # Define event callbacks
 def on_connect(client, userdata, flags, rc):
 	print("rc: " + str(rc))
@@ -66,32 +68,57 @@ def webhook():
 		abort(400)
 	return "OK"
 
+_await_temp = 0
+_await_humi = 0
+_await_lumi = 0
+_await_mois = 0
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-	global temp
+	global temp, _await_temp, _await_humi, _await_lumi, _await_mois
 	temp = event
 	mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
 	mqttc.connect('m15.cloudmqtt.com',  17711 )
 	mqttc.subscribe("/test2", 0)
 	text = event.message.text
 	text = text.splitlines()
-	print (text[0])
-	if text[0].lower() == "stat":
+        cmd = text[0].lower()
+        print ("Got: " + text[0] + " --> " + cmd)
+        if   cmd == "stat":
 		mqttc.publish("/test1", text[0])
 		mqttc.loop_forever()
-	elif text[0].lower() == "help":
+	elif cmd  == "help":
 		line_bot_api.reply_message(
 			temp.reply_token,
-			TextSendMessage("There are : \nstat -- Check the environment in side the box.\nhelp -- Well, that's how you get here.\nedit -- Assign new value to the setting."))
-	elif text[0].lower() == "edit":
-		broker_out = {"humi":text[2], "temp":text[1], "mois":text[3], "lumi":text[4]}
+                        TextSendMessage("There are : \nstat -- Check the environment in side the box.\nhelp -- Well, that's how you get here.\nedit -- Edit values of the setting.\nassign -- Assign new values to the system\nver -- Check the version of Line Interactive"))
+	elif cmd == "edit":
+                _await_temp = text[1]
+                _await_humi = text[2]
+                _await_lumi = text[3]
+                _await_mois = text[4]
+                line_bot_api.reply_message(
+                        temp.reply_token,
+                        TextSendMessage("These values will be assigned\nTemp : {0}\nHumi : {1}\nMois : {2}\nLigh : {3}\n\nTo confirm type : assign".format(_await_temp, _await_humi, _await_lumi, _await_mois))
+                )
+        elif cmd == "assign"
+                broker_out = {
+                        "humi":_await_humi,
+                        "temp":_await_temp,
+                        "mois":_await_mois,
+                        "lumi":_await_mois
+                }
 		data_out = json.dumps(broker_out)
 		mqttc.publish("/test1", data_out)
 		line_bot_api.reply_message(
 			temp.reply_token,
-			TextSendMessage("Values assiged")
+			TextSendMessage("Values assigned")
 		)
-	else:
+        elif cmd == "ver":
+            line_bot_api.reply_message(
+                        temp.reply_token,
+                        TextSendMessage(_APP_VERSION_)
+                    )
+        else:
 		txt = event.message.text + " is not a valid function name."
 		line_bot_api.reply_message(
 			temp.reply_token,[
