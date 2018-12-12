@@ -74,24 +74,23 @@ def handle_message(event):
 	mqttc.connect('m15.cloudmqtt.com',  17711 )
 	mqttc.subscribe("/test2", 0)
 	text = event.message.text
-	text.lower()
 	text = text.splitlines()
 	print (text[0])
-	if text[0] == "stat":
+	if text[0].lower() == "stat":
 		mqttc.publish("/test1", text[0])
 		mqttc.loop_forever()
-	elif text[0] == "help":
+	elif text[0].lower() == "help":
 		line_bot_api.reply_message(
 			temp.reply_token,
 			TextSendMessage("There are : \nstat -- Check the environment in side the box.\nhelp -- Well, that's how you get here.\nedit -- Assign new value to the setting."))
-	elif text[0] == "edit":
+	elif text[0].lower() == "edit":
 		broker_out = {"humi":text[2], "temp":text[1], "mois":text[3], "lumi":text[4]}
-		line_bot_api.reply_message(
-			temp.reply_token,
-			TextSendMessage("Assign these values to be target values? (y/n)")
-		)
 		data_out = json.dumps(broker_out)
 		mqttc.publish("/test1", data_out)
+		line_bot_api.reply_message(
+			temp.reply_token,
+			TextSendMessage("Values assiged")
+		)
 	else:
 		txt = event.message.text + " is not a valid function name."
 		line_bot_api.reply_message(
