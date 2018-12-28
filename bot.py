@@ -115,22 +115,22 @@ def handle_message(event):
 			temp.reply_token,
 			TextSendMessage("Values assigned")
 		)
-	elif cmd == "confirm":
-		confirm_template = ConfirmTemplate(text='Do it?', actions=[
-            MessageAction(label='Yes', text='Yes!'),
-            MessageAction(label='No', text='No!'),
-        ])
-        template_message = TemplateSendMessage(
-            alt_text='Confirm alt text', template=confirm_template)
-        line_bot_api.reply_message(temp.reply_token, template_message)
 
 	elif cmd == "ver":
 		line_bot_api.reply_message(
 			temp.reply_token,
 			TextSendMessage(_APP_VERSION_)
-	)
-
-	else:
+		)
+	elif cmd == "confirm":
+		confirm_template = ConfirmTemplate(text='Do it?', actions=[
+            MessageAction(label='Yes', text='Yes!'),
+            MessageAction(label='No', text='No!'),
+        ])
+		template_message = TemplateSendMessage(
+            alt_text='Confirm alt text', template=confirm_template)
+		line_bot_api.reply_message(event.reply_token, template_message)
+		
+	else :
 		txt = event.message.text + " is not a valid function name."
 		line_bot_api.reply_message(
 			temp.reply_token,[
