@@ -111,12 +111,16 @@ def handle_message(event):
 		_await_humi = text[2]
 		_await_lumi = text[3]
 		_await_mois = text[4]
-		line_bot_api.reply_message(
-			temp.reply_token,
-			TextSendMessage("These values will be assigned\nTemp : {0}\nHumi : {1}\nMois : {2}\nLigh : {3}\n\nTo confirm type : assign".format(_await_temp, _await_humi, _await_lumi, _await_mois))
-		)
+		textmsg = "These values will be assigned\nTemp : {0}\nHumi : {1}\nMois : {2}\nLigh : {3}\n\nTo confirm type : Yes".format(_await_temp, _await_humi, _await_lumi, _await_mois)
+		confirm_template = ConfirmTemplate(textmsg, actions=[
+            MessageAction(label='Yes', text='Yes!'),
+            MessageAction(label='No', text='No!'),
+        ])
+		template_message = TemplateSendMessage(
+            alt_text='Confirm alt text', template=confirm_template)
+		line_bot_api.reply_message(event.reply_token, template_message)
 
-	elif cmd == "assign" :
+	elif cmd == "Yes!" :
 		broker_out = {
                         "humi":_await_humi,
                         "temp":_await_temp,
