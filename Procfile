@@ -1,1 +1,1 @@
-web: gunicorn bot:app --log-file=-p
+web: gunicorn example:app --log-file=-p
