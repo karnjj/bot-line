@@ -125,7 +125,7 @@ def handle_message(event):
                         "humi":_await_humi,
                         "temp":_await_temp,
                         "mois":_await_mois,
-                        "lumi":_await_mois
+                        "lumi":_await_lumi
                 }
 		data_out = json.dumps(broker_out)
 		mqttc.publish("/test1", data_out)
