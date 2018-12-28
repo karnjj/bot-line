@@ -68,19 +68,25 @@ def hello():
 
 @app.route("/webhook", methods=['POST'])
 def webhook():
-	# get X-Line-Signature header value
-	signature = request.headers['X-Line-Signature']
+    # get X-Line-Signature header value
+    signature = request.headers['X-Line-Signature']
 
-	# get request body as text
-	body = request.get_data(as_text=True)
-	app.logger.info("Request body: " + body)
+    # get request body as text
+    body = request.get_data(as_text=True)
+    app.logger.info("Request body: " + body)
 
     # handle webhook body
-	try:
-		handler.handle(body, signature)
-	except InvalidSignatureError:
-		abort(400)
-	return "OK"
+    try:
+        handler.handle(body, signature)
+    except LineBotApiError as e:
+        print("Got exception from LINE Messaging API: %s\n" % e.message)
+        for m in e.error.details:
+            print("  %s: %s" % (m.property, m.message))
+        print("\n")
+    except InvalidSignatureError:
+        abort(400)
+
+    return 'OK'
 
 _await_temp = 0
 _await_humi = 0
