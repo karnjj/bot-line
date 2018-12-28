@@ -1,7 +1,7 @@
-line-bot-sdk==1.7.1
-flask==1.0.2
-pylint==1.9.2
-gunicorn==19.8.1
-requests==2.20.0
-codecov==2.0.15
-paho-mqtt==1.4.0
+line-bot-sdk
+flask
+pylint
+gunicorn
+requests
+codecov
+paho-mqtt
