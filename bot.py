@@ -5,7 +5,7 @@ from linebot.models import (MessageEvent, TextMessage, TextSendMessage,)
 import paho.mqtt.client as mqtt
 import json
 
-_APP_VERSION_ = "beta 1.08"
+_APP_VERSION_ = "beta 1.10"
 
 # Define event callbacks
 def on_connect(client, userdata, flags, rc):
@@ -84,7 +84,7 @@ def handle_message(event):
 	text = text.splitlines()
 	cmd = text[0].lower()
 	print ("Got: " + text[0] + " --> " + cmd)
-	
+
 	if cmd == "stat":
 		mqttc.publish("/test1", text[0])
 		mqttc.loop_forever()
@@ -101,7 +101,7 @@ def handle_message(event):
 			temp.reply_token,
 			TextSendMessage("These values will be assigned\nTemp : {0}\nHumi : {1}\nMois : {2}\nLigh : {3}\n\nTo confirm type : assign".format(_await_temp, _await_humi, _await_lumi, _await_mois))
 		)
-		
+
 	elif cmd == "assign" :
 		broker_out = {
                         "humi":_await_humi,
@@ -115,13 +115,13 @@ def handle_message(event):
 			temp.reply_token,
 			TextSendMessage("Values assigned")
 		)
-		
+
 	elif cmd == "ver":
 		line_bot_api.reply_message(
 			temp.reply_token,
 			TextSendMessage(_APP_VERSION_)
 	)
-	
+
 	else:
 		txt = event.message.text + " is not a valid function name."
 		line_bot_api.reply_message(
