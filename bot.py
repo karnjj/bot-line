@@ -89,7 +89,7 @@ _await_mois = 0
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-	global temp, _await_temp, _await_humi, _await_lumi, _await_mois
+	global temp, _await_temp, _await_humi, _await_lumi, _await_mois, flag_update
 	temp = event
 	mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
 	mqttc.connect('m15.cloudmqtt.com',  17711 )
