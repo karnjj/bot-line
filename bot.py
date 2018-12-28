@@ -120,7 +120,7 @@ def handle_message(event):
             alt_text='Confirm alt text', template=confirm_template)
 		line_bot_api.reply_message(event.reply_token, template_message)
 
-	elif cmd == "Yes!" :
+	elif cmd == "yes!" :
 		broker_out = {
                         "humi":_await_humi,
                         "temp":_await_temp,
