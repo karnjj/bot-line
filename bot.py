@@ -20,7 +20,7 @@ import paho.mqtt.client as mqtt
 import json
 
 _APP_VERSION_ = "beta 1.10"
-
+flag_update = False
 # Define event callbacks
 def on_connect(client, userdata, flags, rc):
 	print("rc: " + str(rc))
@@ -119,8 +119,9 @@ def handle_message(event):
 		template_message = TemplateSendMessage(
             alt_text='Confirm alt text', template=confirm_template)
 		line_bot_api.reply_message(event.reply_token, template_message)
+		flag_update = True
 
-	elif cmd == "yes!" :
+	elif cmd == "yes!" and flag_update:
 		broker_out = {
                         "humi":_await_humi,
                         "temp":_await_temp,
@@ -133,6 +134,7 @@ def handle_message(event):
 			temp.reply_token,
 			TextSendMessage("Values assigned")
 		)
+		flag_update = False
 
 	elif cmd == "ver":
 		line_bot_api.reply_message(
