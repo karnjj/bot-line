@@ -95,7 +95,7 @@ def webhook():
     except InvalidSignatureError:
         abort(400)
 
-    return 'OK'
+    return '200'
 
 
 _await_temp = 0
@@ -137,7 +137,7 @@ def handle_message(event):
         ])
         template_message = TemplateSendMessage(
             alt_text='Confirm alt text', template=confirm_template)
-        line_bot_api.reply_message(event.reply_token, template_message)
+        line_bot_api.reply_message(temp.reply_token, template_message)
         flag_update = True
     elif cmd == "yes!" and flag_update:
         broker_out = {
