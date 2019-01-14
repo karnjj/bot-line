@@ -75,8 +75,8 @@ def hello():
     return "Welcome to my line bot"
 
 
-@app.route("/webhook", methods=['POST'])
-def webhook():
+@app.route("/callback", methods=['POST'])
+def callback():
     # get X-Line-Signature header value
     signature = request.headers['X-Line-Signature']
 
@@ -95,7 +95,7 @@ def webhook():
     except InvalidSignatureError:
         abort(400)
 
-    return '200'
+    return 200
 
 
 _await_temp = 0
