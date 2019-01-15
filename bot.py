@@ -36,7 +36,6 @@ with open('config.ini','w') as configfile :
 def on_connect(client, userdata, flags, rc):
     print("rc: " + str(rc))
 
-
 def on_message(client, obj, msg):
     global temp
     m_in = json.loads(msg.payload)
@@ -47,20 +46,17 @@ def on_message(client, obj, msg):
         TextSendMessage("Temp\t: {0:2d} C\nHumi\t\t: {1:2d} %\nMois\t\t: {2}\nLigh\t\t: {3:2d}" .format(int(m_in["temp"]), int(m_in["humi"]), str(bool(m_in["mois"])), int(m_in["lumi"]))))
     mqttc.disconnect()
 
-
 def on_publish(client, obj, mid):
     print("mid: " + str(mid))
-
 
 def on_subscribe(client, obj, mid, granted_qos):
     print("Subscribed: " + str(mid) + " " + str(granted_qos))
 
-
 def on_log(client, obj, level, string):
     print(string)
 
-def savedata(data) :
-    with open('config.ini','w') as configfile :
+def savedata(data):
+    with open('config.ini', 'w') as configfile:
         data.write(configfile)
 
 mqttc = mqtt.Client()
@@ -70,32 +66,26 @@ mqttc.on_connect = on_connect
 mqttc.on_publish = on_publish
 mqttc.on_subscribe = on_subscribe
 
-
 mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
 mqttc.connect('m15.cloudmqtt.com',  17711)
 mqttc.subscribe("/test2", 0)
 
-
 app = Flask(__name__)
 
 line_bot_api = LineBotApi(cfg.get('LineServer', 'Channel_token'))
-handler = WebhookHandler(cfg.get('LineServer','Channel_secret'))
-
+handler = WebhookHandler(cfg.get('LineServer', 'Channel_secret'))
 
 @app.route("/")
 def hello():
     return "Welcome to my line bot"
 
-
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
     signature = request.headers['X-Line-Signature']
-
     # get request body as text
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
-
     # handle webhook body
     try:
         handler.handle(body, signature)
@@ -106,22 +96,19 @@ def callback():
         print("\n")
     except InvalidSignatureError:
         abort(400)
-
     return 200
-
 
 _await_temp = 0
 _await_humi = 0
 _await_lumi = 0
 _await_mois = 0
 
-
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     global temp, _await_temp, _await_humi, _await_lumi, _await_mois, flag_update
     print(event)
     cfg.read('config.ini')
-    #print(cfg.sections())
+    # print(cfg.sections())
     temp = event
     mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
     mqttc.connect('m15.cloudmqtt.com',  17711)
@@ -129,8 +116,7 @@ def handle_message(event):
     text = event.message.text
     text = text.splitlines()
     cmd = text[0].lower()
-    print ("Got: " + text[0] + " --> " + cmd)
-
+    print("Got: " + text[0] + " --> " + cmd)
     if cmd == "stat":
         mqttc.publish("/test1", text[0])
         mqttc.loop_forever()
@@ -174,14 +160,6 @@ def handle_message(event):
             temp.reply_token,
             TextSendMessage(_APP_VERSION_)
         )
-    elif cmd == "confirm":
-        confirm_template = ConfirmTemplate(text='Do it?', actions=[
-            MessageAction(label='Yes', text='Yes!'),
-            MessageAction(label='No', text='No!'),
-        ])
-        template_message = TemplateSendMessage(
-            alt_text='Confirm alt text', template=confirm_template)
-        line_bot_api.reply_message(event.reply_token, template_message)
     else:
         txt = event.message.text + " is not a valid function name."
         line_bot_api.reply_message(
@@ -190,7 +168,5 @@ def handle_message(event):
                 TextSendMessage("Please try again.")
             ]
         )
-
-
 if __name__ == "__main__":
     app.run()
