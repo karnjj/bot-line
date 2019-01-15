@@ -22,14 +22,16 @@ from configparser import ConfigParser
 
 _APP_VERSION_ = "beta 1.10"
 cfg = ConfigParser()
+cfg.read('config.ini')
 flag_update = False
+"""
 cfg['LineServer'] = {}
 cfg['LineServer']['Channel_token'] = 'o14KQyuIIqKfmAdR9b+oat4z8A7nKRtWjMdIaGSjGl6vuxc8Ot85rGSEAFWVVOeS+OWiQGTjFH7IAf7hBiRU+2txbde+ZNaJHEXIv6B59aZRXotzbvXiXhk4Py9rpfyg6/LJlMQFvkPBrF+s8SUKLAdB04t89/1O/w1cDnyilFU='
 cfg['LineServer']['Channel_secret'] = '375be5ebbd4428a657ecd629c07e2beb'
 cfg['configData'] = {'_await_temp' : '0','_await_humi' : '0','_await_lumi' : '0','_await_mois' : '0','flag_update' : '0'}
-with open('server.cfg','w') as configfile :
+with open('config.ini','w') as configfile :
     cfg.write(configfile)
-
+"""
 # Define event callbacks
 def on_connect(client, userdata, flags, rc):
     print("rc: " + str(rc))
@@ -73,9 +75,8 @@ mqttc.subscribe("/test2", 0)
 
 app = Flask(__name__)
 
-line_bot_api = LineBotApi(
-    'o14KQyuIIqKfmAdR9b+oat4z8A7nKRtWjMdIaGSjGl6vuxc8Ot85rGSEAFWVVOeS+OWiQGTjFH7IAf7hBiRU+2txbde+ZNaJHEXIv6B59aZRXotzbvXiXhk4Py9rpfyg6/LJlMQFvkPBrF+s8SUKLAdB04t89/1O/w1cDnyilFU=')
-handler = WebhookHandler('375be5ebbd4428a657ecd629c07e2beb')
+line_bot_api = LineBotApi(cfg.get('LineServer', 'Channel_token'))
+handler = WebhookHandler(cfg.get('LineServer','Channel_secret'))
 
 
 @app.route("/")
@@ -116,8 +117,8 @@ _await_mois = 0
 def handle_message(event):
     global temp, _await_temp, _await_humi, _await_lumi, _await_mois, flag_update
     print(event)
-    cfg.read('server.cfg')
-    print(cfg.sections())
+    cfg.read('config.ini')
+    #print(cfg.sections())
     temp = event
     mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
     mqttc.connect('m15.cloudmqtt.com',  17711)
@@ -148,8 +149,10 @@ def handle_message(event):
         template_message = TemplateSendMessage(
             alt_text='Confirm alt text', template=confirm_template)
         line_bot_api.reply_message(temp.reply_token, template_message)
-        flag_update = True
-    elif cmd == "yes!" and flag_update:
+        cfg['configData']['flag_update'] = 'True'
+        with open('config.ini','w') as configfile :
+            cfg.write(configfile)
+    elif cmd == "yes!" and cfg.getboolean('configData', 'flag_update'):
         broker_out = {
             "humi": _await_humi,
             "temp": _await_temp,
@@ -162,7 +165,9 @@ def handle_message(event):
             temp.reply_token,
             TextSendMessage("Values assigned")
         )
-        flag_update = False
+        cfg['configData']['flag_update'] = 'False'
+        with open('config.ini','w') as configfile :
+            cfg.write(configfile)
     elif cmd == "ver":
         line_bot_api.reply_message(
             temp.reply_token,
