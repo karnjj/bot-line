@@ -59,6 +59,9 @@ def on_subscribe(client, obj, mid, granted_qos):
 def on_log(client, obj, level, string):
     print(string)
 
+def savedata(data) :
+    with open('config.ini','w') as configfile :
+        data.write(configfile)
 
 mqttc = mqtt.Client()
 # Assign event callbacks
@@ -150,8 +153,7 @@ def handle_message(event):
             alt_text='Confirm alt text', template=confirm_template)
         line_bot_api.reply_message(temp.reply_token, template_message)
         cfg['configData']['flag_update'] = 'True'
-        with open('config.ini','w') as configfile :
-            cfg.write(configfile)
+        savedata(cfg)
     elif cmd == "yes!" and cfg.getboolean('configData', 'flag_update'):
         broker_out = {
             "humi": _await_humi,
@@ -166,8 +168,7 @@ def handle_message(event):
             TextSendMessage("Values assigned")
         )
         cfg['configData']['flag_update'] = 'False'
-        with open('config.ini','w') as configfile :
-            cfg.write(configfile)
+        savedata(cfg)
     elif cmd == "ver":
         line_bot_api.reply_message(
             temp.reply_token,
