@@ -116,7 +116,6 @@ _await_mois = 0
 def handle_message(event):
     global temp, _await_temp, _await_humi, _await_lumi, _await_mois, flag_update
     print(event)
-    init()
     cfg.read('server.cfg')
     print(cfg.sections())
     temp = event
