@@ -23,13 +23,12 @@ from configparser import ConfigParser
 _APP_VERSION_ = "beta 1.10"
 cfg = ConfigParser()
 flag_update = False
-def init() :
-    cfg['LineServer'] = {}
-    cfg['LineServer']['Channel_token'] = 'o14KQyuIIqKfmAdR9b+oat4z8A7nKRtWjMdIaGSjGl6vuxc8Ot85rGSEAFWVVOeS+OWiQGTjFH7IAf7hBiRU+2txbde+ZNaJHEXIv6B59aZRXotzbvXiXhk4Py9rpfyg6/LJlMQFvkPBrF+s8SUKLAdB04t89/1O/w1cDnyilFU='
-    cfg['LineServer']['Channel_secret'] = '375be5ebbd4428a657ecd629c07e2beb'
-    cfg['configData'] = {'_await_temp' : '0','_await_humi' : '0','_await_lumi' : '0','_await_mois' : '0','flag_update' : '0'}
-    with open('server.cfg','w') as configfile :
-        cfg.write(configfile)
+cfg['LineServer'] = {}
+cfg['LineServer']['Channel_token'] = 'o14KQyuIIqKfmAdR9b+oat4z8A7nKRtWjMdIaGSjGl6vuxc8Ot85rGSEAFWVVOeS+OWiQGTjFH7IAf7hBiRU+2txbde+ZNaJHEXIv6B59aZRXotzbvXiXhk4Py9rpfyg6/LJlMQFvkPBrF+s8SUKLAdB04t89/1O/w1cDnyilFU='
+cfg['LineServer']['Channel_secret'] = '375be5ebbd4428a657ecd629c07e2beb'
+cfg['configData'] = {'_await_temp' : '0','_await_humi' : '0','_await_lumi' : '0','_await_mois' : '0','flag_update' : '0'}
+with open('server.cfg','w') as configfile :
+    cfg.write(configfile)
 
 # Define event callbacks
 def on_connect(client, userdata, flags, rc):
@@ -189,8 +188,4 @@ def handle_message(event):
 
 
 if __name__ == "__main__":
-    init()
-    cfg.read('server.cfg')
-    print(cfg.sections())
-    print('ready to use!!')
     app.run()
