@@ -189,4 +189,5 @@ if __name__ == "__main__":
     init()
     cfg.read('server.cfg')
     print(cfg.sections())
+    print('ready to use!!')
     app.run()
