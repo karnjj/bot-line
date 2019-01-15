@@ -173,5 +173,7 @@ def handle_message(event):
                 TextSendMessage("Please try again.")
             ]
         )
+    mqttc.disconnect()
+    mqttc.loop_stop()
 if __name__ == "__main__":
     app.run()
