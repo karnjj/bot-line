@@ -96,7 +96,7 @@ def callback():
         print("\n")
     except InvalidSignatureError:
         abort(400)
-    return 200
+    return 'OK'
 
 _await_temp = 0
 _await_humi = 0
