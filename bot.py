@@ -19,11 +19,11 @@ from linebot.models import (
 import paho.mqtt.client as mqtt
 import json
 from configparser import ConfigParser
-
+import time
 _APP_VERSION_ = "beta 1.10"
 cfg = ConfigParser()
 cfg.read('config.ini')
-flag_update = False
+loop_flag = 1
 """
 cfg['LineServer'] = {}
 cfg['LineServer']['Channel_token'] = 'o14KQyuIIqKfmAdR9b+oat4z8A7nKRtWjMdIaGSjGl6vuxc8Ot85rGSEAFWVVOeS+OWiQGTjFH7IAf7hBiRU+2txbde+ZNaJHEXIv6B59aZRXotzbvXiXhk4Py9rpfyg6/LJlMQFvkPBrF+s8SUKLAdB04t89/1O/w1cDnyilFU='
@@ -37,14 +37,14 @@ def on_connect(client, userdata, flags, rc):
     print("rc: " + str(rc))
 
 def on_message(client, obj, msg):
-    global temp
+    global temp,loop_flag
     m_in = json.loads(msg.payload)
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
     #txt = str(m_in["temp"]) + " " + str(m_in["humi"]) + " " + str(bool(m_in["mois"]))
     line_bot_api.reply_message(
         temp.reply_token,
         TextSendMessage("Temp\t: {0:2d} C\nHumi\t\t: {1:2d} %\nMois\t\t: {2}\nLigh\t\t: {3:2d}" .format(int(m_in["temp"]), int(m_in["humi"]), str(bool(m_in["mois"])), int(m_in["lumi"]))))
-    mqttc.disconnect()
+    loop_flag = 0
 
 def on_publish(client, obj, mid):
     print("mid: " + str(mid))
@@ -119,7 +119,12 @@ def handle_message(event):
     print("Got: " + text[0] + " --> " + cmd)
     if cmd == "stat":
         mqttc.publish("/test1", text[0])
-        mqttc.loop_forever()
+        mqttc.loop_start()
+        while loop_flag == 1 :
+            time.sleep(0.1)
+        loop_flag = 1
+        mqttc.disconnect()
+        mqttc.loop_stop()
     elif cmd == "help":
         line_bot_api.reply_message(
             temp.reply_token,
