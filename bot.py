@@ -55,6 +55,7 @@ def on_subscribe(client, obj, mid, granted_qos):
 def on_log(client, obj, level, string):
     print(string)
 
+
 def savedata(data):
     with open('config.ini', 'w') as configfile:
         data.write(configfile)
@@ -123,8 +124,6 @@ def handle_message(event):
         while loop_flag == 1 :
             time.sleep(0.1)
         loop_flag = 1
-        mqttc.disconnect()
-        mqttc.loop_stop()
     elif cmd == "help":
         line_bot_api.reply_message(
             temp.reply_token,
