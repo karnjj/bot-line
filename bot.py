@@ -106,7 +106,7 @@ _await_mois = 0
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    global temp, _await_temp, _await_humi, _await_lumi, _await_mois, flag_update
+    global temp, _await_temp, _await_humi, _await_lumi, _await_mois, loop_flag
     print(event)
     cfg.read('config.ini')
     # print(cfg.sections())
