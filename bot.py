@@ -108,8 +108,8 @@ def handle_message(event):
     if cmd == "stat":
         mqttc.publish("/test1", text[0])
         mqttc.loop_start()
-        while loop_flag == 1:
-            time.sleep(0.1)
+        while loop_flag == 1 and count < 5:
+            time.sleep(1)
             count += 1
             print(count)
         loop_flag = 1
