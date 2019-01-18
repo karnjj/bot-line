@@ -93,6 +93,7 @@ _await_mois = 0
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     global temp, _await_temp, _await_humi, _await_lumi, _await_mois, loop_flag
+    count = 0
     print(event)
     cfg.read('config.ini')
     # print(cfg.sections())
@@ -107,8 +108,10 @@ def handle_message(event):
     if cmd == "stat":
         mqttc.publish("/test1", text[0])
         mqttc.loop_start()
-        while loop_flag == 1 :
+        while loop_flag == 1 and count < 5:
             time.sleep(0.1)
+            count += 1
+            print(count)
         loop_flag = 1
     elif cmd == "help":
         line_bot_api.reply_message(
