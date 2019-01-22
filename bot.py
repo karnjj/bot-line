@@ -113,7 +113,7 @@ def handle_message(event):
     mqttc.connect('m15.cloudmqtt.com',  17711)
     mqttc.subscribe("/test2", 0)
     text = event.message.text
-    text = text.splitlines()
+    text = text.split()
     cmd = text[0].lower()
     print("Got: " + text[0] + " --> " + cmd)
     if cmd == "stat":
