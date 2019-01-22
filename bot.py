@@ -144,21 +144,27 @@ def handle_message(event):
         line_bot_api.reply_message(temp.reply_token, template_message)
         cfg['configData']['flag_update'] = 'True'
         savedata(cfg)
-    elif cmd == "yes!" and cfg.getboolean('configData', 'flag_update'):
-        broker_out = {
-            "humi": _await_humi,
-            "temp": _await_temp,
-            "mois": _await_mois,
-            "lumi": _await_lumi
-        }
-        data_out = json.dumps(broker_out)
-        mqttc.publish("/test1", data_out)
-        line_bot_api.reply_message(
-            temp.reply_token,
-            TextSendMessage("Values assigned")
-        )
-        cfg['configData']['flag_update'] = 'False'
-        savedata(cfg)
+    elif cmd == "yes!":
+        if cfg.getboolean('configData', 'flag_update'):
+            broker_out = {
+                "humi": _await_humi,
+                "temp": _await_temp,
+                "mois": _await_mois,
+                "lumi": _await_lumi
+            }
+            data_out = json.dumps(broker_out)
+            mqttc.publish("/test1", data_out)
+            line_bot_api.reply_message(
+                temp.reply_token,
+                TextSendMessage("Values assigned")
+            )
+            cfg['configData']['flag_update'] = 'False'
+            savedata(cfg)
+        else:
+            line_bot_api.reply_message(
+                temp.reply_token,
+                TextSendMessage("No value change")
+            )
     elif cmd == "ver":
         line_bot_api.reply_message(
             temp.reply_token,
