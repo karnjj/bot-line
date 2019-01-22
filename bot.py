@@ -19,11 +19,14 @@ with open('config.ini','w') as configfile :
     cfg.write(configfile)
 """
 # Define event callbacks
+
+
 def on_connect(client, userdata, flags, rc):
     print("rc: " + str(rc))
 
+
 def on_message(client, obj, msg):
-    global temp,loop_flag
+    global temp, loop_flag
     m_in = json.loads(msg.payload)
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
     #txt = str(m_in["temp"]) + " " + str(m_in["humi"]) + " " + str(bool(m_in["mois"]))
@@ -32,11 +35,14 @@ def on_message(client, obj, msg):
         TextSendMessage("Temp\t: {0:2d} C\nHumi\t\t: {1:2d} %\nMois\t\t: {2}\nLigh\t\t: {3:2d}" .format(int(m_in["temp"]), int(m_in["humi"]), str(bool(m_in["mois"])), int(m_in["lumi"]))))
     loop_flag = 0
 
+
 def on_publish(client, obj, mid):
     print("mid: " + str(mid))
 
+
 def on_subscribe(client, obj, mid, granted_qos):
     print("Subscribed: " + str(mid) + " " + str(granted_qos))
+
 
 def on_log(client, obj, level, string):
     print(string)
@@ -45,6 +51,7 @@ def on_log(client, obj, level, string):
 def savedata(data):
     with open('config.ini', 'w') as configfile:
         data.write(configfile)
+
 
 mqttc = mqtt.Client()
 # Assign event callbacks
@@ -62,9 +69,11 @@ app = Flask(__name__)
 line_bot_api = LineBotApi(cfg.get('LineServer', 'Channel_token'))
 handler = WebhookHandler(cfg.get('LineServer', 'Channel_secret'))
 
+
 @app.route("/")
 def hello():
     return "Welcome to my line bot"
+
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -85,10 +94,12 @@ def callback():
         abort(400)
     return 'OK'
 
+
 _await_temp = 0
 _await_humi = 0
 _await_lumi = 0
 _await_mois = 0
+
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -163,5 +174,7 @@ def handle_message(event):
         )
     mqttc.disconnect()
     mqttc.loop_stop()
+
+
 if __name__ == "__main__":
     app.run()
