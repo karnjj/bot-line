@@ -125,7 +125,7 @@ def handle_message(event):
         txtmsg = "There are : \nstat -- Check the environment in side the box.\nhelp -- Well, that's how you get here.\n"
         + "edit -- Edit values of the setting.\nassign -- Assign new values to the system\nver -- Check the version of Line Interactive"
         line_bot_api.reply_message(
-            temp.reply_token,
+            event.reply_token,
             TextSendMessage(
                 text = 'Quick reply',
                 quick_reply = QuickReply(
