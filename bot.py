@@ -21,7 +21,6 @@ def on_message(client, obj, msg):
     global temp, loop_flag
     m_in = json.loads(msg.payload)
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
-    #txt = str(m_in["temp"]) + " " + str(m_in["humi"]) + " " + str(bool(m_in["mois"]))
     line_bot_api.reply_message(
         temp.reply_token,
         TextSendMessage("Temp\t: {0:2d} C\nHumi\t\t: {1:2d} %\nMois\t\t: {2}\nLigh\t\t: {3:2d}" .format(int(m_in["temp"]), int(m_in["humi"]), str(bool(m_in["mois"])), int(m_in["lumi"]))))
@@ -120,7 +119,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             temp.reply_token,
             TextSendMessage("There are : \nstat -- Check the environment in side the box.\nhelp -- Well, that's how you get here.\n"
-                "edit -- Edit values of the setting.\nassign -- Assign new values to the system\nver -- Check the version of Line Interactive"))
+                            "edit -- Edit values of the setting.\nassign -- Assign new values to the system\nver -- Check the version of Line Interactive"))
     elif cmd == "edit":
         _await_temp = text[1]
         _await_humi = text[2]
