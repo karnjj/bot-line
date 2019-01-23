@@ -10,17 +10,9 @@ _APP_VERSION_ = "beta 1.10"
 cfg = ConfigParser()
 cfg.read('config.ini')
 loop_flag = 1
-"""
-cfg['LineServer'] = {}
-cfg['LineServer']['Channel_token'] = 'o14KQyuIIqKfmAdR9b+oat4z8A7nKRtWjMdIaGSjGl6vuxc8Ot85rGSEAFWVVOeS+OWiQGTjFH7IAf7hBiRU+2txbde+ZNaJHEXIv6B59aZRXotzbvXiXhk4Py9rpfyg6/LJlMQFvkPBrF+s8SUKLAdB04t89/1O/w1cDnyilFU='
-cfg['LineServer']['Channel_secret'] = '375be5ebbd4428a657ecd629c07e2beb'
-cfg['configData'] = {'_await_temp' : '0','_await_humi' : '0','_await_lumi' : '0','_await_mois' : '0','flag_update' : '0'}
-with open('config.ini','w') as configfile :
-    cfg.write(configfile)
-"""
+
+
 # Define event callbacks
-
-
 def on_connect(client, userdata, flags, rc):
     print("rc: " + str(rc))
 
@@ -127,7 +119,8 @@ def handle_message(event):
     elif cmd == "help":
         line_bot_api.reply_message(
             temp.reply_token,
-            TextSendMessage("There are : \nstat -- Check the environment in side the box.\nhelp -- Well, that's how you get here.\nedit -- Edit values of the setting.\nassign -- Assign new values to the system\nver -- Check the version of Line Interactive"))
+            TextSendMessage("There are : \nstat -- Check the environment in side the box.\nhelp -- Well, that's how you get here.\n"
+                "edit -- Edit values of the setting.\nassign -- Assign new values to the system\nver -- Check the version of Line Interactive"))
     elif cmd == "edit":
         _await_temp = text[1]
         _await_humi = text[2]
