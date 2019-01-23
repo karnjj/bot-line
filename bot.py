@@ -116,10 +116,25 @@ def handle_message(event):
             print(count)
         loop_flag = 1
     elif cmd == "help":
+        """
         line_bot_api.reply_message(
             temp.reply_token,
             TextSendMessage("There are : \nstat -- Check the environment in side the box.\nhelp -- Well, that's how you get here.\n"
                             "edit -- Edit values of the setting.\nassign -- Assign new values to the system\nver -- Check the version of Line Interactive"))
+        """
+        line_bot_api.reply_message(
+            temp.reply_token,
+            TextSendMessage(
+                txtmsg = 'Help',
+                quick_reply = QuickReply(
+                    items = [
+                        QuickReplyButton(
+                            action = MessageAction(label = "stat", txtmsg = "stat")
+                        )
+                    ]
+                )
+            )
+        )
     elif cmd == "edit":
         _await_temp = text[1]
         _await_humi = text[2]
