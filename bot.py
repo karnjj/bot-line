@@ -126,11 +126,17 @@ def handle_message(event):
             temp.reply_token,
             TextSendMessage(
                 text="There are : \nstat -- Check the environment in side the box.\nhelp -- Well, that's how you get here.\n"
-                     "edit -- Edit values of the setting.\nassign -- Assign new values to the system\nver -- Check the version of Line Interactive",
+                     "edit -- Edit values of the setting.\nver -- Check the version of Line Interactive",
                 quick_reply=QuickReply(
                     items=[
                         QuickReplyButton(
-                            action=MessageAction(label="stat", text="stat")
+                            action=MessageAction(label="Stat", text="stat")
+                        ),
+                        QuickReplyButton(
+                            action=MessageAction(label="Edit", text="edit")
+                        ),
+                        QuickReplyButton(
+                            action=MessageAction(label="Ver", text="ver")
                         ),
                     ])))
     elif cmd == "edit":
