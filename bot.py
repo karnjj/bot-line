@@ -121,33 +121,16 @@ def handle_message(event):
             temp.reply_token,
             TextSendMessage("There are : \nstat -- Check the environment in side the box.\nhelp -- Well, that's how you get here.\n"
                             "edit -- Edit values of the setting.\nassign -- Assign new values to the system\nver -- Check the version of Line Interactive"))
-        txtmsg = "There are : \nstat -- Check the environment in side the box.\nhelp -- Well, that's how you get here.\n"
-        + "edit -- Edit values of the setting.\nassign -- Assign new values to the system\nver -- Check the version of Line Interactive" """
+        """
         line_bot_api.reply_message(
-            event.reply_token,
+            temp.reply_token,
             TextSendMessage(
-                text='Quick reply',
+                text="There are : \nstat -- Check the environment in side the box.\nhelp -- Well, that's how you get here.\n"
+                     "edit -- Edit values of the setting.\nassign -- Assign new values to the system\nver -- Check the version of Line Interactive",
                 quick_reply=QuickReply(
                     items=[
                         QuickReplyButton(
-                            action=PostbackAction(label="label1", data="data1")
-                        ),
-                        QuickReplyButton(
-                            action=MessageAction(label="label2", text="text2")
-                        ),
-                        QuickReplyButton(
-                            action=DatetimePickerAction(label="label3",
-                                                        data="data3",
-                                                        mode="date")
-                        ),
-                        QuickReplyButton(
-                            action=CameraAction(label="label4")
-                        ),
-                        QuickReplyButton(
-                            action=CameraRollAction(label="label5")
-                        ),
-                        QuickReplyButton(
-                            action=LocationAction(label="label6")
+                            action=MessageAction(label="stat", text="stat")
                         ),
                     ])))
     elif cmd == "edit":
