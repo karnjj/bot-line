@@ -127,7 +127,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             temp.reply_token,
             TextSendMessage(
-                text = txtmsg,
+                text = 'Quick reply',
                 quick_reply = QuickReply(
                     items = [
                         QuickReplyButton(
