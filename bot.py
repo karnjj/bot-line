@@ -136,7 +136,7 @@ def handle_message(event):
                             action=MessageAction(label="Edit", text="edit")
                         ),
                         QuickReplyButton(
-                            action=PostbackAction(label="Ver", data="ver")
+                            action=MessageAction(label="Ver", text="ver")
                         ),
                     ])))
     elif cmd == "edit":
