@@ -121,47 +121,22 @@ def handle_message(event):
             temp.reply_token,
             TextSendMessage("There are : \nstat -- Check the environment in side the box.\nhelp -- Well, that's how you get here.\n"
                             "edit -- Edit values of the setting.\nassign -- Assign new values to the system\nver -- Check the version of Line Interactive"))
-
+        """
+        txtmsg = "There are : \nstat -- Check the environment in side the box.\nhelp -- Well, that's how you get here.\n"
+        + "edit -- Edit values of the setting.\nassign -- Assign new values to the system\nver -- Check the version of Line Interactive"
         line_bot_api.reply_message(
             temp.reply_token,
             TextSendMessage(
-                txtmsg = 'Help',
+                text = txtmsg,
                 quick_reply = QuickReply(
                     items = [
                         QuickReplyButton(
-                            action = MessageAction(label = "stat", txtmsg = "stat")
+                            action = MessageAction(label = "stat", text = "stat")
                         )
                     ]
                 )
             )
-        )"""
-        line_bot_api.reply_message(
-            temp.reply_token,
-            TextSendMessage(
-                text='Quick reply',
-                quick_reply=QuickReply(
-                    items=[
-                        QuickReplyButton(
-                            action=PostbackAction(label="label1", data="data1")
-                        ),
-                        QuickReplyButton(
-                            action=MessageAction(label="label2", text="text2")
-                        ),
-                        QuickReplyButton(
-                            action=DatetimePickerAction(label="label3",
-                                                        data="data3",
-                                                        mode="date")
-                        ),
-                        QuickReplyButton(
-                            action=CameraAction(label="label4")
-                        ),
-                        QuickReplyButton(
-                            action=CameraRollAction(label="label5")
-                        ),
-                        QuickReplyButton(
-                            action=LocationAction(label="label6")
-                        ),
-                    ])))
+        )
     elif cmd == "edit":
         _await_temp = text[1]
         _await_humi = text[2]
