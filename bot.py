@@ -121,9 +121,8 @@ def handle_message(event):
             temp.reply_token,
             TextSendMessage("There are : \nstat -- Check the environment in side the box.\nhelp -- Well, that's how you get here.\n"
                             "edit -- Edit values of the setting.\nassign -- Assign new values to the system\nver -- Check the version of Line Interactive"))
-        """
         txtmsg = "There are : \nstat -- Check the environment in side the box.\nhelp -- Well, that's how you get here.\n"
-        + "edit -- Edit values of the setting.\nassign -- Assign new values to the system\nver -- Check the version of Line Interactive"
+        + "edit -- Edit values of the setting.\nassign -- Assign new values to the system\nver -- Check the version of Line Interactive" """
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(
