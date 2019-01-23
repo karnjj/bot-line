@@ -132,11 +132,8 @@ def handle_message(event):
                     items = [
                         QuickReplyButton(
                             action = MessageAction(label = "stat", text = "stat")
-                        )
-                    ]
-                )
-            )
-        )
+                        ),
+                    ])))
     elif cmd == "edit":
         _await_temp = text[1]
         _await_humi = text[2]
