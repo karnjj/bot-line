@@ -142,10 +142,10 @@ def handle_message(event):
     elif cmd == "edit":
         _await_temp = text[1]
         _await_humi = text[2]
-        _await_lumi = text[3]
-        _await_mois = text[4]
+        _await_mois = text[3]
+        _await_lumi = text[4]
         textmsg = "These values will be assigned\nTemp : {0}\nHumi : {1}\nMois : {2}\nLigh : {3}\n\nTo confirm type : Yes".format(
-            _await_temp, _await_humi, _await_lumi, _await_mois)
+            _await_temp, _await_humi, _await_mois, _await_lumi)
         confirm_template = ConfirmTemplate(textmsg, actions=[
             MessageAction(label='Yes', text='Yes!'),
             MessageAction(label='No', text='No!'),
