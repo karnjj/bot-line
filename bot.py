@@ -189,26 +189,12 @@ def handle_message(event):
                 contents=[
                 TextComponent(
                     text='Temp',
-                    wrap=False,
                     weight='bold'
-                    ),
-                TextComponent(
-                    text="0 C",
-                    align = 'end'
-                    ),
-                TextComponent(
-                    text='Humi',
-                    wrap=False,
-                    weight='bold'
-                    ),
-                TextComponent(
-                    text="0 %",
-                    align = 'end'
                     )
                 ],
             ),
         )
-        message = FlexSendMessage(alt_text="hello", contents=bubble)
+        message = FlexSendMessage(alt_text="Status", contents=bubble)
         line_bot_api.reply_message(
             event.reply_token,
             message
