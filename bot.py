@@ -178,6 +178,12 @@ def handle_message(event):
     elif cmd == "flex":
         bubble = BubbleContainer(
             direction='ltr',
+            header=BoxComponent(
+                layout='vertical',
+                contents=[
+                TextComponent(text='Device Status', weight='bold', size='lg')
+                ]
+            ),
             hero=ImageComponent(
                 url='https://example.com/cafe.jpg',
                 size='full',
