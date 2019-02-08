@@ -181,15 +181,14 @@ def handle_message(event):
             header=BoxComponent(
                 layout='vertical',
                 contents=[
-                TextComponent(text='Device Status', weight='bold', size='lg')
+                TextComponent(text='Device Status', align='center', weight='bold', size='lg')
                 ]
             ),
             hero=ImageComponent(
-                url='https://example.com/cafe.jpg',
+                url='https://image.flaticon.com/icons/svg/762/762719.svg',
                 size='full',
-                aspect_ratio='20:13',
+                aspect_ratio='1:1',
                 aspect_mode='cover',
-                action=URIAction(uri='http://example.com', label='label')
             ),
             body=BoxComponent(
                 layout='vertical',
@@ -262,29 +261,6 @@ def handle_message(event):
                         ],
                     )
                 ],
-            ),
-            footer=BoxComponent(
-                layout='vertical',
-                spacing='sm',
-                contents=[
-                    # callAction, separator, websiteAction
-                    SpacerComponent(size='sm'),
-                    # callAction
-                    ButtonComponent(
-                        style='link',
-                        height='sm',
-                        action=URIAction(label='CALL', uri='tel:000000'),
-                    ),
-                    # separator
-                    SeparatorComponent(),
-                    # websiteAction
-                    ButtonComponent(
-                        style='link',
-                        height='sm',
-                        action=URIAction(
-                            label='WEBSITE', uri="https://example.com")
-                    )
-                ]
             ),
         )
         message = FlexSendMessage(alt_text="hello", contents=bubble)
