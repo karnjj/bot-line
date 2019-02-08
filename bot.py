@@ -184,82 +184,13 @@ def handle_message(event):
                 TextComponent(text='Device Status', align='center', weight='bold', size='lg')
                 ]
             ),
-            hero=ImageComponent(
-                url='https://image.flaticon.com/icons/svg/762/762719.svg',
-                size='full',
-                aspect_ratio='1:1',
-                aspect_mode='cover',
-            ),
             body=BoxComponent(
                 layout='vertical',
                 contents=[
-                    # title
-                    TextComponent(text='Brown Cafe', weight='bold', size='xl'),
-                    # review
-                    BoxComponent(
-                        layout='baseline',
-                        margin='md',
-                        contents=[
-                            IconComponent(
-                                size='sm', url='https://example.com/gold_star.png'),
-                            IconComponent(
-                                size='sm', url='https://example.com/grey_star.png'),
-                            IconComponent(
-                                size='sm', url='https://example.com/gold_star.png'),
-                            IconComponent(
-                                size='sm', url='https://example.com/gold_star.png'),
-                            IconComponent(
-                                size='sm', url='https://example.com/grey_star.png'),
-                            TextComponent(text='4.0', size='sm', color='#999999', margin='md',
-                                          flex=0)
-                        ]
-                    ),
-                    # info
-                    BoxComponent(
-                        layout='vertical',
-                        margin='lg',
-                        spacing='sm',
-                        contents=[
-                            BoxComponent(
-                                layout='baseline',
-                                spacing='sm',
-                                contents=[
-                                    TextComponent(
-                                        text='Place',
-                                        color='#aaaaaa',
-                                        size='sm',
-                                        flex=1
-                                    ),
-                                    TextComponent(
-                                        text='Shinjuku, Tokyo',
-                                        wrap=True,
-                                        color='#666666',
-                                        size='sm',
-                                        flex=5
-                                    )
-                                ],
-                            ),
-                            BoxComponent(
-                                layout='baseline',
-                                spacing='sm',
-                                contents=[
-                                    TextComponent(
-                                        text='Time',
-                                        color='#aaaaaa',
-                                        size='sm',
-                                        flex=1
-                                    ),
-                                    TextComponent(
-                                        text="10:00 - 23:00",
-                                        wrap=True,
-                                        color='#666666',
-                                        size='sm',
-                                        flex=5,
-                                    ),
-                                ],
-                            ),
-                        ],
-                    )
+                TextComponent(text='Temp', weight='bold'),
+                TextComponent(text="0 C", align = 'end'),
+                TextComponent(text='Humi', weight='bold'),
+                TextComponent(text="0 %", align = 'end')
                 ],
             ),
         )
