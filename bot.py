@@ -23,7 +23,7 @@ def on_message(client, obj, msg):
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
     line_bot_api.reply_message(
         temp.reply_token,
-        TextSendMessage("Temp\t: {0:2d} C\nHumi\t\t: {1:2d} %\nMois\t\t: {2}\nLigh\t\t: {3}" .format(int(m_in["in_temp"]), int(m_in["in_humi"]), str(bool(m_in["mois"])), str(bool(m_in["lumi"])))))
+        TextSendMessage("Temp\t: {0:2d} C\nHumi\t\t: {1:2d} %\nMois\t\t: {2}\nLigh\t\t: {3}" .format(int(m_in["in_temp"]), int(m_in["in_humi"]), (m_in["mois"]), str(bool(m_in["lumi"])))))
     loop_flag = 0
 
 
@@ -86,15 +86,9 @@ def callback():
     return 'OK'
 
 
-_await_temp = 0
-_await_humi = 0
-_await_lumi = 0
-_await_mois = 0
-
-
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    global temp, _await_temp, _await_humi, _await_lumi, _await_mois, loop_flag
+    global temp, loop_flag
     count = 0
     print(event)
     cfg.read('config.ini')
@@ -140,12 +134,12 @@ def handle_message(event):
                         ),
                     ])))
     elif cmd == "edit":
-        _await_temp = text[1]
-        _await_humi = text[2]
-        _await_mois = text[3]
-        _await_lumi = text[4]
+        cfg['configData']['temp'] = text[1]
+        cfg['configData']['humi'] = text[2]
+        cfg['configData']['mois'] = text[3]
+        cfg['configData']['lumi'] = text[4]
         textmsg = "These values will be assigned\nTemp : {0}\nHumi : {1}\nMois : {2}\nLigh : {3}\n\nTo confirm type : Yes".format(
-            _await_temp, _await_humi, _await_mois, _await_lumi)
+            text[1], text[2], text[3], str(bool(text[4])))
         confirm_template = ConfirmTemplate(textmsg, actions=[
             MessageAction(label='Yes', text='Yes!'),
             MessageAction(label='No', text='No!'),
@@ -158,10 +152,10 @@ def handle_message(event):
     elif cmd == "yes!":
         if cfg.getboolean('configData', 'flag_update'):
             broker_out = {
-                "humi": _await_humi,
-                "temp": _await_temp,
-                "mois": _await_mois,
-                "lumi": _await_lumi
+                "humi": cfg['configData']['humi'],
+                "temp": cfg['configData']['temp'],
+                "mois": cfg['configData']['mois'],
+                "lumi": cfg['configData']['lumi']
             }
             data_out = json.dumps(broker_out)
             mqttc.publish("/test1", data_out)
