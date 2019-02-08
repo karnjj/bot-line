@@ -187,10 +187,24 @@ def handle_message(event):
             body=BoxComponent(
                 layout='vertical',
                 contents=[
-                TextComponent(text='Temp', weight='bold'),
-                TextComponent(text="0 C", align = 'end'),
-                TextComponent(text='Humi', weight='bold'),
-                TextComponent(text="0 %", align = 'end')
+                TextComponent(
+                    text='Temp',
+                    weight='bold'
+                    ),
+                TextComponent(
+                    text="0 C",
+                    wrap=True,
+                    align = 'end'
+                    ),
+                TextComponent(
+                    text='Humi',
+                    weight='bold'
+                    ),
+                TextComponent(
+                    text="0 %",
+                    wrap=True, 
+                    align = 'end'
+                    )
                 ],
             ),
         )
