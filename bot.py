@@ -189,7 +189,7 @@ def handle_message(event):
                 contents=[
                 TextComponent(
                     text='Temp',
-                    wrap=True,
+                    wrap=False,
                     weight='bold'
                     ),
                 TextComponent(
@@ -198,7 +198,7 @@ def handle_message(event):
                     ),
                 TextComponent(
                     text='Humi',
-                    wrap=True, 
+                    wrap=False,
                     weight='bold'
                     ),
                 TextComponent(
