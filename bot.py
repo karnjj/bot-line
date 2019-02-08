@@ -23,7 +23,7 @@ def on_message(client, obj, msg):
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
     line_bot_api.reply_message(
         temp.reply_token,
-        TextSendMessage("Temp\t: {0:2d} C\nHumi\t\t: {1:2d} %\nMois\t\t: {2}\nLigh\t\t: {3:2d}" .format(int(m_in["in_temp"]), int(m_in["in_humi"]), str(bool(m_in["mois"])), str(bool(m_in["lumi"])))))
+        TextSendMessage("Temp\t: {0:2d} C\nHumi\t\t: {1:2d} %\nMois\t\t: {2}\nLigh\t\t: {3}" .format(int(m_in["in_temp"]), int(m_in["in_humi"]), str(bool(m_in["mois"])), str(bool(m_in["lumi"])))))
     loop_flag = 0
 
 
