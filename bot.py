@@ -183,19 +183,7 @@ def handle_message(event):
                 contents=[
                 TextComponent(text='Device Status', align='center', weight='bold', size='lg')
                 ]
-            ),"""
-            body=BoxComponent(
-                layout='vertical',
-                contents=[
-                    BoxComponent(
-                            layout='baseline',
-                            content=[
-                                TextComponent(text='Inside Temp', align='start', weight='bold'),
-                                TextComponent(text='0C', align='end', weight='bold'),
-                            ]
-                    )
-                ],
-            ),"""
+            ),
         )
         message = FlexSendMessage(alt_text="Status", contents=bubble)
         line_bot_api.reply_message(
