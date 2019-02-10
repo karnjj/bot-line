@@ -185,10 +185,10 @@ def handle_message(event):
                 ]
             ),
             bode=BoxComponent(
-                layout='vertical'
+                layout='vertical',
                 contents=[
                     BoxComponent(
-                        layout='horizontal'
+                        layout='horizontal',
                         contents=[
                             TextComponent(text='Inside Temp',align='start',weight='bold'),
                             TextComponent(text='0 C',align='end',weight='bold'),
