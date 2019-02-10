@@ -187,9 +187,12 @@ def handle_message(event):
             body=BoxComponent(
                 layout='vertical',
                 contents=[
-                TextComponent(
-                    text='Temp',
-                    weight='bold'
+                    BoxComponent(
+                            layout='baseline',
+                            content=[
+                                TextComponent(text='Inside Temp', align='start', weight='bold'),
+                                TextComponent(text=int(m_in["in_temp"]) + 'C', align='end', weight='bold')
+                            ]
                     )
                 ],
             ),
