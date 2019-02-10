@@ -188,28 +188,11 @@ def handle_message(event):
                 layout='vertical',
                 contents=[
                     BoxComponent(
-                        layout='vertical',
-                        content=[
-                            BoxComponent(
-                                layout='baseline',
-                                spacing='sm',
-                                contents=[
-                                    TextComponent(
-                                        text='Place',
-                                        color='#aaaaaa',
-                                        size='sm',
-                                        flex=1
-                                    ),
-                                    TextComponent(
-                                        text='Shinjuku, Tokyo',
-                                        wrap=True,
-                                        color='#666666',
-                                        size='sm',
-                                        flex=5
-                                    )
-                                ],
-                            ),
-                        ]
+                            layout='baseline',
+                            content=[
+                                TextComponent(text='Inside Temp', align='start', weight='bold'),
+                                TextComponent(text='0C', align='end', weight='bold'),
+                            ]
                     )
                 ],
             ),
