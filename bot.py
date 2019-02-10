@@ -192,9 +192,43 @@ def handle_message(event):
                         contents=[
                             TextComponent(text='Inside Temp',align='start',weight='bold'),
                             TextComponent(text='0 C',align='end',weight='bold'),
-
                         ]
-                    )
+                    ),
+                    BoxComponent(
+                        layout='horizontal',
+                        contents=[
+                            TextComponent(text='Outside Temp',align='start',weight='bold'),
+                            TextComponent(text='0 C',align='end',weight='bold'),
+                        ]
+                    ),
+                    BoxComponent(
+                        layout='horizontal',
+                        contents=[
+                            TextComponent(text='Inside Humi',align='start',weight='bold'),
+                            TextComponent(text='0 %',align='end',weight='bold'),
+                        ]
+                    ),
+                    BoxComponent(
+                        layout='horizontal',
+                        contents=[
+                            TextComponent(text='Outside Humi',align='start',weight='bold'),
+                            TextComponent(text='0 %',align='end',weight='bold'),
+                        ]
+                    ),
+                    BoxComponent(
+                        layout='horizontal',
+                        contents=[
+                            TextComponent(text='Mois',align='start',weight='bold'),
+                            TextComponent(text='0 %',align='end',weight='bold'),
+                        ]
+                    ),
+                    BoxComponent(
+                        layout='horizontal',
+                        contents=[
+                            TextComponent(text='Lumi',align='start',weight='bold'),
+                            TextComponent(text='True',align='end',weight='bold'),
+                        ]
+                    ),
                 ]
             )
         )
