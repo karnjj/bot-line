@@ -184,7 +184,7 @@ def handle_message(event):
                     TextComponent(text='Device Status', align='center', weight='bold', size='lg')
                 ]
             ),
-            bode=BoxComponent(
+            body=BoxComponent(
                 layout='vertical',
                 contents=[
                     BoxComponent(
