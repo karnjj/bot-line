@@ -263,10 +263,4 @@ def handle_message(event):
 
 
 if __name__ == "__main__":
-    '''
-    t1 = threading.Thread(target=app.run)
-    t2 = threading.Thread(target=remind)
-    t1.start()
-    t2.start()
-    '''
-    remind()
+    app.run(debug=True)
