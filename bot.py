@@ -86,8 +86,7 @@ def callback():
         abort(400)
     return 'OK'
 
-
-@handler.add(MessageEvent, message=TextMessage)
+@handler.default()
 def remind():
     while True:
         line_bot_api.push_message(
@@ -95,6 +94,7 @@ def remind():
             TextSendMessage(str(datetime.datetime.now()))
         )
         time.sleep(5)
+@handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     global temp, loop_flag
     count = 0
