@@ -88,6 +88,13 @@ def callback():
 
 
 @handler.add(MessageEvent, message=TextMessage)
+def remind():
+    while True:
+        line_bot_api.push_message(
+            'U68a3a83f15c519f660754c9c0959dd50',
+            TextSendMessage(str(datetime.datetime.now()))
+        )
+        time.sleep(5)
 def handle_message(event):
     global temp, loop_flag
     count = 0
@@ -254,9 +261,3 @@ def handle_message(event):
 
 if __name__ == "__main__":
     app.run()
-    while True:
-        line_bot_api.push_message(
-            'U68a3a83f15c519f660754c9c0959dd50',
-            TextSendMessage(str(datetime.datetime.now()))
-        )
-        time.sleep(5)
