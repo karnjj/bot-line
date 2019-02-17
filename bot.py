@@ -255,8 +255,8 @@ def handle_message(event):
 if __name__ == "__main__":
     app.run()
     while True:
-        time.sleep(5)
         line_bot_api.push_message(
             'U68a3a83f15c519f660754c9c0959dd50',
             TextSendMessage(str(datetime.datetime.now()))
         )
+        time.sleep(5)
