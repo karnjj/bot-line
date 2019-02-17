@@ -258,5 +258,5 @@ if __name__ == "__main__":
         time.sleep(5)
         line_bot_api.push_message(
             'U68a3a83f15c519f660754c9c0959dd50',
-            TextMessage(str(datetime.datetime.now()))
+            TextSendMessage(str(datetime.datetime.now()))
         )
