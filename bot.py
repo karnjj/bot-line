@@ -6,6 +6,7 @@ import paho.mqtt.client as mqtt
 import json
 from configparser import ConfigParser
 import time
+import datetime
 _APP_VERSION_ = "beta 1.10"
 cfg = ConfigParser()
 cfg.read('config.ini')
@@ -237,6 +238,8 @@ def handle_message(event):
             event.reply_token,
             message
         )
+    elif cmd == 'remind':
+        print(cmd)
     else:
         txt = event.message.text + " is not a valid function name."
         line_bot_api.reply_message(
@@ -251,3 +254,9 @@ def handle_message(event):
 
 if __name__ == "__main__":
     app.run()
+    while True:
+        time.sleep(5)
+        line_bot_api.push_message(
+            'U68a3a83f15c519f660754c9c0959dd50',
+            TextMessage(str(datetime.datetime.now()))
+        )
