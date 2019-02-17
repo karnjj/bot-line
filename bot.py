@@ -90,7 +90,7 @@ def callback():
 
 def remind():
     while True:
-        #print(1);
+        #print(1)
         line_bot_api.push_message(
             'U68a3a83f15c519f660754c9c0959dd50',
             TextSendMessage(str(datetime.datetime.now()))
