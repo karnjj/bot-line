@@ -7,6 +7,7 @@ import json
 from configparser import ConfigParser
 import time
 import datetime
+import threading
 _APP_VERSION_ = "beta 1.10"
 cfg = ConfigParser()
 cfg.read('config.ini')
@@ -84,11 +85,12 @@ def callback():
         print("\n")
     except InvalidSignatureError:
         abort(400)
-    return 'OK'
+    return 200
 
-@handler.add()
+
 def remind():
     while True:
+        #print(1);
         line_bot_api.push_message(
             'U68a3a83f15c519f660754c9c0959dd50',
             TextSendMessage(str(datetime.datetime.now()))
@@ -261,4 +263,7 @@ def handle_message(event):
 
 
 if __name__ == "__main__":
-    app.run()
+    t1 = threading.Thread(target=app.run)
+    t2 = threading.Thread(target=remind)
+    t1.start()
+    t2.start()
