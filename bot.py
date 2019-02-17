@@ -250,6 +250,7 @@ def handle_message(event):
         )
     elif cmd == 'remind':
         print(cmd)
+        remind()
     else:
         txt = event.message.text + " is not a valid function name."
         line_bot_api.reply_message(
@@ -263,4 +264,4 @@ def handle_message(event):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
