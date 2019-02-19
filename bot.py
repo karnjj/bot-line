@@ -195,49 +195,55 @@ def handle_message(event):
                     TextComponent(text='Device Status', align='center', weight='bold', size='lg')
                 ]
             ),
+            hero=ImageComponent(
+                url='https://image.flaticon.com/icons/svg/1470/1470946.svg',
+                size='4xl',
+                aspect_ratio='1.51:1',
+                aspect_mode='fit',
+            ),
             body=BoxComponent(
                 layout='vertical',
                 contents=[
                     BoxComponent(
                         layout='horizontal',
                         contents=[
-                            TextComponent(text='Inside Temp',align='start',weight='bold'),
-                            TextComponent(text='0 C',align='end',weight='bold'),
+                            TextComponent(text='Inside Temp',align='start',weight='regular'),
+                            TextComponent(text='0 C',align='end',weight='regular'),
                         ]
                     ),
                     BoxComponent(
                         layout='horizontal',
                         contents=[
-                            TextComponent(text='Outside Temp',align='start',weight='bold'),
-                            TextComponent(text='0 C',align='end',weight='bold'),
+                            TextComponent(text='Outside Temp',align='start',weight='regular'),
+                            TextComponent(text='0 C',align='end',weight='regular'),
                         ]
                     ),
                     BoxComponent(
                         layout='horizontal',
                         contents=[
-                            TextComponent(text='Inside Humi',align='start',weight='bold'),
-                            TextComponent(text='0 %',align='end',weight='bold'),
+                            TextComponent(text='Inside Humi',align='start',weight='regular'),
+                            TextComponent(text='0 %',align='end',weight='regular'),
                         ]
                     ),
                     BoxComponent(
                         layout='horizontal',
                         contents=[
-                            TextComponent(text='Outside Humi',align='start',weight='bold'),
-                            TextComponent(text='0 %',align='end',weight='bold'),
+                            TextComponent(text='Outside Humi',align='start',weight='regular'),
+                            TextComponent(text='0 %',align='end',weight='regular'),
                         ]
                     ),
                     BoxComponent(
                         layout='horizontal',
                         contents=[
-                            TextComponent(text='Mois',align='start',weight='bold'),
-                            TextComponent(text='0 %',align='end',weight='bold'),
+                            TextComponent(text='Mois',align='start',weight='regular'),
+                            TextComponent(text='0 %',align='end',weight='regular'),
                         ]
                     ),
                     BoxComponent(
                         layout='horizontal',
                         contents=[
-                            TextComponent(text='Lumi',align='start',weight='bold'),
-                            TextComponent(text='True',align='end',weight='bold'),
+                            TextComponent(text='Lumi',align='start',weight='regular'),
+                            TextComponent(text='True',align='end',weight='regular'),
                         ]
                     ),
                 ]
