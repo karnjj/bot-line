@@ -1,4 +1,6 @@
 from flask import Flask, request, abort
+import firebase_admin
+from firebase_admin import credentials
 from linebot import (LineBotApi, WebhookHandler)
 from linebot.exceptions import (InvalidSignatureError)
 from linebot.models import *
@@ -56,6 +58,9 @@ mqttc.on_subscribe = on_subscribe
 mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
 mqttc.connect('m15.cloudmqtt.com',  17711)
 mqttc.subscribe("/test2", 0)
+
+cred = credentials.Certificate("pocket-farm-b1970-firebase-adminsdk-sfo2w-db33ced3fd.json")
+firebase_admin.initialize_app(cred)
 
 app = Flask(__name__)
 
@@ -144,6 +149,12 @@ def handle_message(event):
                             action=MessageAction(label="Ver", text="ver")
                         ),
                     ])))
+    elif cmd == "load":
+        doc_ref = db.collection(u'Profiles').document(u'test')
+        doc = doc_ref.get().to_dict()
+        line_bot_api.reply_message(
+            temp.reply_token,
+            TextSendMessage("Temp\t: {0:2d} C\nHumi\t\t: {1:2d} %\nMois\t\t: {2}\nLigh\t\t: {3}" .format(int(doc['temp']), int(doc['humi']), (doc['mois']), str(bool(doc['lumi'])))))
     elif cmd == "edit":
         cfg['configData']['temp'] = text[1]
         cfg['configData']['humi'] = text[2]
