@@ -152,9 +152,9 @@ def handle_message(event):
                         ),
                     ])))
     elif cmd == "load":
-        doc_ref = db.collection(u'Profiles').document(u'test')
+        doc_ref = db.collection(u'Profiles').document(u'{text[1]}')
         doc = doc_ref.get().to_dict()
-        print(doc['temp'])
+        #print(doc['temp'])
         line_bot_api.reply_message(
             temp.reply_token,
             TextSendMessage("Temp\t: {0:2d} C\nHumi\t\t: {1:2d} %\nMois\t\t: {2}\nLigh\t\t: {3}" .format(int(doc['temp']), int(doc['humi']), int(doc['mois']), str(bool(doc['lumi'])))))
