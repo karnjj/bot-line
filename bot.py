@@ -155,9 +155,17 @@ def handle_message(event):
         doc_ref = db.collection(u'Profiles').document(text[1])
         doc = doc_ref.get().to_dict()
         #print(doc['temp'])
-        line_bot_api.reply_message(
-            temp.reply_token,
-            TextSendMessage("Temp\t: {0:2d} C\nHumi\t\t: {1:2d} %\nMois\t\t: {2}\nLigh\t\t: {3}" .format(int(doc['temp']), int(doc['humi']), int(doc['mois']), str(bool(doc['lumi'])))))
+        textmsg = "These values will be assigned\nTemp : {0}\nHumi : {1}\nMois : {2}\nLigh : {3}\n\nTo confirm type : Yes".format(
+            doc['temp'], doc['humi'], doc['mosi'], str(bool(doc['lumi'])))
+        confirm_template = ConfirmTemplate(textmsg, actions=[
+            MessageAction(label='Yes', text='Yes!'),
+            MessageAction(label='No', text='No!'),
+        ])
+        template_message = TemplateSendMessage(
+            alt_text='Confirm alt text', template=confirm_template)
+        line_bot_api.reply_message(temp.reply_token, template_message)
+        cfg['configData']['flag_update'] = 'True'
+        savedata(cfg)
     elif cmd == "edit":
         cfg['configData']['temp'] = text[1]
         cfg['configData']['humi'] = text[2]
