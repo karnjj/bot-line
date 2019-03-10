@@ -154,7 +154,7 @@ def handle_message(event):
         doc = doc_ref.get().to_dict()
         line_bot_api.reply_message(
             temp.reply_token,
-            TextSendMessage("Temp\t: {0:2d} C\nHumi\t\t: {1:2d} %\nMois\t\t: {2}\nLigh\t\t: {3}" .format(int(doc['temp']), int(doc['humi']), (doc['mois']), str(bool(doc['lumi'])))))
+            TextSendMessage("Temp\t: {0:2d} C\nHumi\t\t: {1:2d} %\nMois\t\t: {2}\nLigh\t\t: {3}" .format(int(doc['temp']), int(doc['humi']), int(doc['mois']), str(bool(doc['lumi'])))))
     elif cmd == "edit":
         cfg['configData']['temp'] = text[1]
         cfg['configData']['humi'] = text[2]
