@@ -183,8 +183,13 @@ def handle_message(event):
         db.collection(u'Profiles').document(text[1]).set(data)
         line_bot_api.reply_message(
             temp.reply_token,
-            TextSendMessage("value save.")
+            TextSendMessage("Profile save.")
         )
+    elif cmd == "del" :
+        db.collection(u'Profiles').document(text[1]).delete()
+        line_bot_api.reply_message(
+            temp.reply_token,
+            TextSendMessage("Profile delete.")
     elif cmd == "edit":
         cfg['configData']['temp'] = text[1]
         cfg['configData']['humi'] = text[2]
