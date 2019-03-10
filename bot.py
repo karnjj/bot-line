@@ -154,12 +154,10 @@ def handle_message(event):
     elif cmd == "load":
         doc_ref = db.collection(u'Profiles').document(text[1])
         doc = doc_ref.get().to_dict()
-        #print(doc['temp'])
-        '''
-        line_bot_api.reply_message(
-            temp.reply_token,
-            TextSendMessage("Temp\t: {0:2d} C\nHumi\t\t: {1:2d} %\nMois\t\t: {2}\nLigh\t\t: {3}" .format(int(doc['temp']), int(doc['humi']), int(doc['mois']), str(bool(doc['lumi'])))))
-        '''
+        cfg['configData']['temp'] = int(doc['temp'])
+        cfg['configData']['humi'] = int(doc['humi'])
+        cfg['configData']['mois'] = int(doc['mois'])
+        cfg['configData']['lumi'] = int(doc['lumi'])
         textmsg = "These values will be assigned\nTemp : {0:2d}\nHumi : {1:2d}\nMois : {2}\nLigh : {3}\n\nTo confirm type : Yes".format(
             int(doc['temp']), int(doc['humi']), int(doc['mois']), str(bool(doc['lumi'])))
         confirm_template = ConfirmTemplate(textmsg, actions=[
@@ -171,6 +169,20 @@ def handle_message(event):
         line_bot_api.reply_message(temp.reply_token, template_message)
         cfg['configData']['flag_update'] = 'True'
         savedata(cfg)
+    elif cmd == "new" :
+        data = {
+            u'temp': text[2],
+            u'humi': text[3],
+            u'mois': text[4],
+            u'lumi' : text[5]
+        }
+
+        # Add a new doc in collection 'cities' with ID 'LA'
+        db.collection(u'Profiles').document(text[1]).set(data)
+        line_bot_api.reply_message(
+            temp.reply_token,
+            TextSendMessage("value save.")
+        )
     elif cmd == "edit":
         cfg['configData']['temp'] = text[1]
         cfg['configData']['humi'] = text[2]
@@ -281,9 +293,6 @@ def handle_message(event):
             event.reply_token,
             message
         )
-    elif cmd == 'remind':
-        print(cmd)
-        remind()
     else:
         txt = event.message.text + " is not a valid function name."
         line_bot_api.reply_message(
