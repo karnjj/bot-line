@@ -1,6 +1,7 @@
 from flask import Flask, request, abort
 import firebase_admin
 from firebase_admin import credentials
+from firebase_admin import firestore
 from linebot import (LineBotApi, WebhookHandler)
 from linebot.exceptions import (InvalidSignatureError)
 from linebot.models import *
@@ -61,6 +62,7 @@ mqttc.subscribe("/test2", 0)
 
 cred = credentials.Certificate("pocket-farm-b1970-firebase-adminsdk-sfo2w-db33ced3fd.json")
 firebase_admin.initialize_app(cred)
+db = firestore.client()
 
 app = Flask(__name__)
 
