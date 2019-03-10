@@ -156,7 +156,7 @@ def handle_message(event):
         doc = doc_ref.get().to_dict()
         #print(doc['temp'])
         textmsg = "These values will be assigned\nTemp : {0}\nHumi : {1}\nMois : {2}\nLigh : {3}\n\nTo confirm type : Yes".format(
-            doc['temp'], doc['humi'], doc['mosi'], str(bool(doc['lumi'])))
+            int(doc['temp']), int(doc['humi']), int(doc['mosi']), str(bool(doc['lumi'])))
         confirm_template = ConfirmTemplate(textmsg, actions=[
             MessageAction(label='Yes', text='Yes!'),
             MessageAction(label='No', text='No!'),
