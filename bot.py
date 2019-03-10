@@ -60,7 +60,9 @@ mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
 mqttc.connect('m15.cloudmqtt.com',  17711)
 mqttc.subscribe("/test2", 0)
 
-
+cred = credentials.Certificate("pocket-farm-b1970-firebase-adminsdk-sfo2w-db33ced3fd.json")
+firebase_admin.initialize_app(cred)
+db = firestore.client()
 
 app = Flask(__name__)
 
@@ -104,9 +106,6 @@ def remind():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    cred = credentials.Certificate("pocket-farm-b1970-firebase-adminsdk-sfo2w-db33ced3fd.json")
-    firebase_admin.initialize_app(cred)
-    db = firestore.client()
     global temp, loop_flag
     count = 0
     print(event)
