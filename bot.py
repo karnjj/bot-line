@@ -247,42 +247,42 @@ def handle_message(event):
                         layout='horizontal',
                         contents=[
                             TextComponent(text='Inside Temp',align='start',weight='regular'),
-                            TextComponent(text='0 C',align='end',weight='regular'),
+                            TextComponent(text=str(m_in["in_temp"]),align='end',weight='regular'),
                         ]
                     ),
                     BoxComponent(
                         layout='horizontal',
                         contents=[
                             TextComponent(text='Outside Temp',align='start',weight='regular'),
-                            TextComponent(text='0 C',align='end',weight='regular'),
+                            TextComponent(text=str(m_in["out_temp"]),align='end',weight='regular'),
                         ]
                     ),
                     BoxComponent(
                         layout='horizontal',
                         contents=[
                             TextComponent(text='Inside Humi',align='start',weight='regular'),
-                            TextComponent(text='0 %',align='end',weight='regular'),
+                            TextComponent(text=str(m_in["in_humi"]),align='end',weight='regular'),
                         ]
                     ),
                     BoxComponent(
                         layout='horizontal',
                         contents=[
                             TextComponent(text='Outside Humi',align='start',weight='regular'),
-                            TextComponent(text='0 %',align='end',weight='regular'),
+                            TextComponent(text=str(m_in["out_humi"]),align='end',weight='regular'),
                         ]
                     ),
                     BoxComponent(
                         layout='horizontal',
                         contents=[
                             TextComponent(text='Mois',align='start',weight='regular'),
-                            TextComponent(text='0 %',align='end',weight='regular'),
+                            TextComponent(text=str(m_in["mois"]),align='end',weight='regular'),
                         ]
                     ),
                     BoxComponent(
                         layout='horizontal',
                         contents=[
                             TextComponent(text='Lumi',align='start',weight='regular'),
-                            TextComponent(text='True',align='end',weight='regular'),
+                            TextComponent(text=str(bool(m_in["lumi"])),align='end',weight='regular'),
                         ]
                     ),
                 ]
