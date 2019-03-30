@@ -153,10 +153,12 @@ def handle_message(event):
     elif cmd == "load":
         doc_ref = db.collection(u'Profiles').document(text[1])
         doc = doc_ref.get().to_dict()
+        '''
         cfg['configData']['temp'] = int(doc['temp'])
         cfg['configData']['humi'] = int(doc['humi'])
         cfg['configData']['mois'] = int(doc['mois'])
         cfg['configData']['lumi'] = int(doc['lumi'])
+        '''
         textmsg = "These values will be assigned\nTemp : {0:2d}\nHumi : {1:2d}\nMois : {2}\nLigh : {3}\n\nTo confirm type : Yes".format(
             int(doc['temp']), int(doc['humi']), int(doc['mois']), str(bool(doc['lumi'])))
         confirm_template = ConfirmTemplate(textmsg, actions=[
@@ -239,12 +241,6 @@ def handle_message(event):
                 contents=[
                     TextComponent(text='Device Status', align='center', weight='bold', size='lg')
                 ]
-            ),
-            hero=ImageComponent(
-                url='https://image.flaticon.com/icons/svg/1470/1470946.svg',
-                size='4xl',
-                aspect_ratio='1.51:1',
-                aspect_mode='fit',
             ),
             body=BoxComponent(
                 layout='vertical',
