@@ -11,7 +11,7 @@ from configparser import ConfigParser
 import time
 import datetime
 import threading
-_APP_VERSION_ = "beta 1.10"
+_APP_VERSION_ = "beta 2.10"
 cfg = ConfigParser()
 cfg.read('config.ini')
 loop_flag = 1
