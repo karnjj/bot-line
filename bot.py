@@ -25,9 +25,67 @@ def on_message(client, obj, msg):
     global temp, loop_flag
     m_in = json.loads(msg.payload)
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
+    bubble = BubbleContainer(
+        direction='ltr',
+        header=BoxComponent(
+            layout='vertical',
+            contents=[
+                TextComponent(text='Device Status', align='center', weight='bold', size='lg')
+            ]
+        ),
+        body=BoxComponent(
+            layout='vertical',
+            contents=[
+                BoxComponent(
+                    layout='horizontal',
+                    contents=[
+                        TextComponent(text='Inside Temp',align='start',weight='regular'),
+                        TextComponent(text=str(m_in["in_temp"]),align='end',weight='regular'),
+                    ]
+                ),
+                BoxComponent(
+                    layout='horizontal',
+                    contents=[
+                        TextComponent(text='Outside Temp',align='start',weight='regular'),
+                        TextComponent(text=str(m_in["out_temp"]),align='end',weight='regular'),
+                    ]
+                ),
+                BoxComponent(
+                    layout='horizontal',
+                    contents=[
+                        TextComponent(text='Inside Humi',align='start',weight='regular'),
+                        TextComponent(text=str(m_in["in_humi"]),align='end',weight='regular'),
+                    ]
+                ),
+                BoxComponent(
+                    layout='horizontal',
+                    contents=[
+                        TextComponent(text='Outside Humi',align='start',weight='regular'),
+                        TextComponent(text=str(m_in["out_humi"]),align='end',weight='regular'),
+                    ]
+                ),
+                BoxComponent(
+                    layout='horizontal',
+                    contents=[
+                        TextComponent(text='Mois',align='start',weight='regular'),
+                        TextComponent(text=str(m_in["mois"]),align='end',weight='regular'),
+                    ]
+                ),
+                BoxComponent(
+                    layout='horizontal',
+                    contents=[
+                        TextComponent(text='Lumi',align='start',weight='regular'),
+                        TextComponent(text=str(bool(m_in["lumi"])),align='end',weight='regular'),
+                    ]
+                ),
+            ]
+        )
+    )
+    message = FlexSendMessage(alt_text="Status", contents=bubble)
     line_bot_api.reply_message(
-        temp.reply_token,
-        TextSendMessage("Temp\t: {0:2d} C\nHumi\t\t: {1:2d} %\nMois\t\t: {2}\nLigh\t\t: {3}" .format(int(m_in["in_temp"]), int(m_in["in_humi"]), (m_in["mois"]), str(bool(m_in["lumi"])))))
+        event.reply_token,
+        message
+    )
     loop_flag = 0
 
 
@@ -93,15 +151,6 @@ def callback():
         abort(400)
     return 200
 
-
-def remind():
-    while True:
-        #print(1)
-        line_bot_api.push_message(
-            'U68a3a83f15c519f660754c9c0959dd50',
-            TextSendMessage(str(datetime.datetime.now()))
-        )
-        time.sleep(5)
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -226,6 +275,12 @@ def handle_message(event):
                 temp.reply_token,
                 TextSendMessage("No value change")
             )
+    elif cmd == "no!":
+        cfg['configData']['flag_update'] = 'False'
+        line_bot_api.reply_message(
+            temp.reply_token,
+            TextSendMessage("No value change")
+        )
     elif cmd == "ver":
         line_bot_api.reply_message(
             temp.reply_token,
