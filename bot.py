@@ -83,11 +83,10 @@ def on_message(client, obj, msg):
     )
     message = FlexSendMessage(alt_text="Status", contents=bubble)
     line_bot_api.reply_message(
-        event.reply_token,
+        temp.reply_token,
         message
     )
     loop_flag = 0
-
 
 def on_publish(client, obj, mid):
     print("mid: " + str(mid))
