@@ -309,4 +309,10 @@ def handle_message(event):
 
 
 if __name__ == "__main__":
+    s = ''
+    doc_ref = db.collection(u'Profiles').list_documents()
+    doc = list(doc_ref)
+    for e in doc :
+        s += str(e.id)+"\n"
+    print(s)
     app.run()
