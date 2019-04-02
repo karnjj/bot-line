@@ -6,3 +6,5 @@ requests==2.20.0
 codecov==2.0.15
 paho-mqtt==1.4.0
 firebase-admin==2.16.0
+google-cloud-datastore==1.7.3
+google-cloud-storage==1.14.0
