@@ -280,6 +280,7 @@ def handle_message(event):
         doc = list(doc_ref)
         for e in doc :
             s += str(e.id)+"\n"
+        print(s)
         line_bot_api.reply_message(
             temp.reply_token,
             TextSendMessage(s)
