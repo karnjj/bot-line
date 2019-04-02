@@ -274,6 +274,16 @@ def handle_message(event):
                 temp.reply_token,
                 TextSendMessage("No value change")
             )
+    elif cmd == "list":
+        s = ''
+        doc_ref = db.collection(u'Profiles').list_documents()
+        doc = list(doc_ref)
+        for e in doc :
+            s += str(e.id)+"\n"
+        line_bot_api.reply_message(
+            temp.reply_token,
+            TextSendMessage(s)
+        )
     elif cmd == "no!":
         cfg['configData']['flag_update'] = 'False'
         line_bot_api.reply_message(
