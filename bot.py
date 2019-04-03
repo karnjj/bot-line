@@ -11,7 +11,7 @@ from configparser import ConfigParser
 import time
 import datetime
 import threading
-_APP_VERSION_ = "beta 2.10"
+_APP_VERSION_ = "1.0"
 cfg = ConfigParser()
 cfg.read('config.ini')
 loop_flag = 1
@@ -275,12 +275,12 @@ def handle_message(event):
                 TextSendMessage("No value change")
             )
     elif cmd == "list":
-        s = ''
+        s = 'List of Profiles :\n';
         doc_ref = db.collection(u'Profiles').list_documents()
         doc = list(doc_ref)
         for e in doc :
             s += str(e.id)+"\n"
-        print(s)
+        #print(s)
         line_bot_api.reply_message(
             temp.reply_token,
             TextSendMessage(s)
@@ -309,10 +309,4 @@ def handle_message(event):
 
 
 if __name__ == "__main__":
-    s = ''
-    doc_ref = db.collection(u'Profiles').list_documents()
-    doc = list(doc_ref)
-    for e in doc :
-        s += str(e.id)+"\n"
-    print(s)
     app.run()
