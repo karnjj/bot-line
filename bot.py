@@ -17,6 +17,8 @@ cfg.read('config.ini')
 loop_flag = 1
 
 # Define event callbacks
+
+
 def on_connect(client, userdata, flags, rc):
     print("rc: " + str(rc))
 
@@ -30,7 +32,8 @@ def on_message(client, obj, msg):
         header=BoxComponent(
             layout='vertical',
             contents=[
-                TextComponent(text='Device Status', align='center', weight='bold', size='lg')
+                TextComponent(text='Device Status',
+                              align='center', weight='bold', size='lg')
             ]
         ),
         body=BoxComponent(
@@ -39,43 +42,55 @@ def on_message(client, obj, msg):
                 BoxComponent(
                     layout='horizontal',
                     contents=[
-                        TextComponent(text='Inside Temp',align='start',weight='regular'),
-                        TextComponent(text=str(m_in["in_temp"]),align='end',weight='regular'),
+                        TextComponent(text='Inside Temp',
+                                      align='start', weight='regular'),
+                        TextComponent(
+                            text=str(m_in["in_temp"]), align='end', weight='regular'),
                     ]
                 ),
                 BoxComponent(
                     layout='horizontal',
                     contents=[
-                        TextComponent(text='Outside Temp',align='start',weight='regular'),
-                        TextComponent(text=str(m_in["out_temp"]),align='end',weight='regular'),
+                        TextComponent(text='Outside Temp',
+                                      align='start', weight='regular'),
+                        TextComponent(
+                            text=str(m_in["out_temp"]), align='end', weight='regular'),
                     ]
                 ),
                 BoxComponent(
                     layout='horizontal',
                     contents=[
-                        TextComponent(text='Inside Humi',align='start',weight='regular'),
-                        TextComponent(text=str(m_in["in_humi"]),align='end',weight='regular'),
+                        TextComponent(text='Inside Humi',
+                                      align='start', weight='regular'),
+                        TextComponent(
+                            text=str(m_in["in_humi"]), align='end', weight='regular'),
                     ]
                 ),
                 BoxComponent(
                     layout='horizontal',
                     contents=[
-                        TextComponent(text='Outside Humi',align='start',weight='regular'),
-                        TextComponent(text=str(m_in["out_humi"]),align='end',weight='regular'),
+                        TextComponent(text='Outside Humi',
+                                      align='start', weight='regular'),
+                        TextComponent(
+                            text=str(m_in["out_humi"]), align='end', weight='regular'),
                     ]
                 ),
                 BoxComponent(
                     layout='horizontal',
                     contents=[
-                        TextComponent(text='Mois',align='start',weight='regular'),
-                        TextComponent(text=str(m_in["mois"]),align='end',weight='regular'),
+                        TextComponent(text='Mois', align='start',
+                                      weight='regular'),
+                        TextComponent(
+                            text=str(m_in["mois"]), align='end', weight='regular'),
                     ]
                 ),
                 BoxComponent(
                     layout='horizontal',
                     contents=[
-                        TextComponent(text='Lumi',align='start',weight='regular'),
-                        TextComponent(text=str(bool(m_in["lumi"])),align='end',weight='regular'),
+                        TextComponent(text='Lumi', align='start',
+                                      weight='regular'),
+                        TextComponent(
+                            text=str(bool(m_in["lumi"])), align='end', weight='regular'),
                     ]
                 ),
             ]
@@ -87,6 +102,7 @@ def on_message(client, obj, msg):
         message
     )
     loop_flag = 0
+
 
 def on_publish(client, obj, mid):
     print("mid: " + str(mid))
@@ -111,19 +127,20 @@ mqttc.on_message = on_message
 mqttc.on_connect = on_connect
 mqttc.on_publish = on_publish
 mqttc.on_subscribe = on_subscribe
-
+# Connect MQTT Could
 mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
 mqttc.connect('m15.cloudmqtt.com',  17711)
 mqttc.subscribe("/test2", 0)
-
-cred = credentials.Certificate("pocket-farm-b1970-firebase-adminsdk-sfo2w-db33ced3fd.json")
+# Connect firebase
+cred = credentials.Certificate(
+    "pocket-farm-b1970-firebase-adminsdk-sfo2w-db33ced3fd.json")
 firebase_admin.initialize_app(cred)
 db = firestore.client()
-
-app = Flask(__name__)
-
+# Connect Line
 line_bot_api = LineBotApi(cfg.get('LineServer', 'Channel_token'))
 handler = WebhookHandler(cfg.get('LineServer', 'Channel_secret'))
+
+app = Flask(__name__)
 
 
 @app.route("/")
@@ -157,7 +174,6 @@ def handle_message(event):
     count = 0
     print(event)
     cfg.read('config.ini')
-    # print(cfg.sections())
     temp = event
     mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
     mqttc.connect('m15.cloudmqtt.com',  17711)
@@ -175,12 +191,6 @@ def handle_message(event):
             print(count)
         loop_flag = 1
     elif cmd == "help":
-        """
-        line_bot_api.reply_message(
-            temp.reply_token,
-            TextSendMessage("There are : \nstat -- Check the environment in side the box.\nhelp -- Well, that's how you get here.\n"
-                            "edit -- Edit values of the setting.\nassign -- Assign new values to the system\nver -- Check the version of Line Interactive"))
-        """
         line_bot_api.reply_message(
             temp.reply_token,
             TextSendMessage(
@@ -216,21 +226,20 @@ def handle_message(event):
         line_bot_api.reply_message(temp.reply_token, template_message)
         cfg['configData']['flag_update'] = 'True'
         savedata(cfg)
-    elif cmd == "new" :
+    elif cmd == "new":
         data = {
             u'temp': text[2],
             u'humi': text[3],
             u'mois': text[4],
-            u'lumi' : text[5]
+            u'lumi': text[5]
         }
-
-        # Add a new doc in collection 'cities' with ID 'LA'
+        # Add a new doc in collection 'Profiles'
         db.collection(u'Profiles').document(text[1]).set(data)
         line_bot_api.reply_message(
             temp.reply_token,
             TextSendMessage("Profile save.")
         )
-    elif cmd == "del" :
+    elif cmd == "del":
         db.collection(u'Profiles').document(text[1]).delete()
         line_bot_api.reply_message(
             temp.reply_token,
@@ -275,22 +284,23 @@ def handle_message(event):
                 TextSendMessage("No value change")
             )
     elif cmd == "list":
-        s = 'List of Profiles :\n';
+        s = 'List of Profiles :\n'
         doc_ref = db.collection(u'Profiles').list_documents()
         doc = list(doc_ref)
-        for e in doc :
-            s += str(e.id)+"\n"
-        #print(s)
+        for e in doc:
+            s += str(e.id) + "\n"
+        # print(s)
         line_bot_api.reply_message(
             temp.reply_token,
             TextSendMessage(s)
         )
     elif cmd == "no!":
-        cfg['configData']['flag_update'] = 'False'
         line_bot_api.reply_message(
             temp.reply_token,
             TextSendMessage("No value change")
         )
+        cfg['configData']['flag_update'] = 'False'
+        savedata(cfg)
     elif cmd == "ver":
         line_bot_api.reply_message(
             temp.reply_token,
