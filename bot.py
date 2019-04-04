@@ -216,7 +216,7 @@ def handle_message(event):
         cfg['configData']['mois'] = str(doc['mois'])
         cfg['configData']['lumi'] = str(doc['lumi'])
         textmsg = "These values will be assigned\nTemp : {0:2d}\nHumi : {1:2d}\nMois : {2}\nLigh : {3}\n\nTo confirm type : Yes".format(
-            int(doc['temp']), int(doc['humi']), int(doc['mois']), str(bool(doc['lumi'])))
+            int(doc['temp']), int(doc['humi']), int(doc['mois']), str(bool(int(doc['lumi']))))
         confirm_template = ConfirmTemplate(textmsg, actions=[
             MessageAction(label='Yes', text='Yes!'),
             MessageAction(label='No', text='No!'),
