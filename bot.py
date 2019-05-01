@@ -11,7 +11,7 @@ from configparser import ConfigParser
 import time
 import datetime
 import threading
-_APP_VERSION_ = "1.0"
+_APP_VERSION_ = "2.11"
 cfg = ConfigParser()
 cfg.read('config.ini')
 loop_flag = 1
