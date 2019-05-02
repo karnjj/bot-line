@@ -90,7 +90,7 @@ def on_message(client, obj, msg):
                         TextComponent(text='Lumi', align='start',
                                       weight='regular'),
                         TextComponent(
-                            text=str(bool(m_in["lumi"])), align='end', weight='regular'),
+                            text=str(bool(int(m_in["lumi"]))), align='end', weight='regular'),
                     ]
                 ),
             ]
