@@ -275,6 +275,11 @@ def handle_message(event):
             }
             data_out = json.dumps(broker_out)
             mqttc.publish("/test1", data_out)
+            while loop_flag == 1 and count < 5:
+                time.sleep(1)
+                count += 1
+                print(count)
+            loop_flag = 1
             line_bot_api.reply_message(
                 temp.reply_token,
                 TextSendMessage("Values assigned")
