@@ -27,75 +27,78 @@ def on_message(client, obj, msg):
     global temp, loop_flag
     m_in = json.loads(msg.payload)
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
-    bubble = BubbleContainer(
-        direction='ltr',
-        header=BoxComponent(
-            layout='vertical',
-            contents=[
-                TextComponent(text='Device Status',
-                              align='center', weight='bold', size='lg')
-            ]
-        ),
-        body=BoxComponent(
-            layout='vertical',
-            contents=[
-                BoxComponent(
-                    layout='horizontal',
-                    contents=[
-                        TextComponent(text='Inside Temp',
-                                      align='start', weight='regular'),
-                        TextComponent(
-                            text=str(m_in["in_temp"]), align='end', weight='regular'),
-                    ]
-                ),
-                BoxComponent(
-                    layout='horizontal',
-                    contents=[
-                        TextComponent(text='Outside Temp',
-                                      align='start', weight='regular'),
-                        TextComponent(
-                            text=str(m_in["out_temp"]), align='end', weight='regular'),
-                    ]
-                ),
-                BoxComponent(
-                    layout='horizontal',
-                    contents=[
-                        TextComponent(text='Inside Humi',
-                                      align='start', weight='regular'),
-                        TextComponent(
-                            text=str(m_in["in_humi"]), align='end', weight='regular'),
-                    ]
-                ),
-                BoxComponent(
-                    layout='horizontal',
-                    contents=[
-                        TextComponent(text='Outside Humi',
-                                      align='start', weight='regular'),
-                        TextComponent(
-                            text=str(m_in["out_humi"]), align='end', weight='regular'),
-                    ]
-                ),
-                BoxComponent(
-                    layout='horizontal',
-                    contents=[
-                        TextComponent(text='Mois', align='start',
-                                      weight='regular'),
-                        TextComponent(
-                            text=str(m_in["mois"]), align='end', weight='regular'),
-                    ]
-                ),
-                BoxComponent(
-                    layout='horizontal',
-                    contents=[
-                        TextComponent(text='Lumi', align='start',
-                                      weight='regular'),
-                        TextComponent(
-                            text=str(bool(m_in["lumi"])), align='end', weight='regular'),
-                    ]
-                ),
-            ]
+    if m_in["topic"] == "active":
+        print(m_in)
+    else:
+        bubble = BubbleContainer(
+            direction='ltr',
+            header=BoxComponent(
+                layout='vertical',
+                contents=[
+                    TextComponent(text='Device Status',
+                                  align='center', weight='bold', size='lg')
+                ]
+            ),
+            body=BoxComponent(
+                layout='vertical',
+                contents=[
+                    BoxComponent(
+                        layout='horizontal',
+                        contents=[
+                            TextComponent(text='Inside Temp',
+                                          align='start', weight='regular'),
+                            TextComponent(
+                                text=str(m_in["in_temp"]), align='end', weight='regular'),
+                        ]
+                    ),
+                    BoxComponent(
+                        layout='horizontal',
+                        contents=[
+                            TextComponent(text='Outside Temp',
+                                          align='start', weight='regular'),
+                            TextComponent(
+                                text=str(m_in["out_temp"]), align='end', weight='regular'),
+                        ]
+                    ),
+                    BoxComponent(
+                        layout='horizontal',
+                        contents=[
+                            TextComponent(text='Inside Humi',
+                                          align='start', weight='regular'),
+                            TextComponent(
+                                text=str(m_in["in_humi"]), align='end', weight='regular'),
+                        ]
+                    ),
+                    BoxComponent(
+                        layout='horizontal',
+                        contents=[
+                            TextComponent(text='Outside Humi',
+                                          align='start', weight='regular'),
+                            TextComponent(
+                                text=str(m_in["out_humi"]), align='end', weight='regular'),
+                        ]
+                    ),
+                    BoxComponent(
+                        layout='horizontal',
+                        contents=[
+                            TextComponent(text='Mois', align='start',
+                                          weight='regular'),
+                            TextComponent(
+                                text=str(m_in["mois"]), align='end', weight='regular'),
+                        ]
+                    ),
+                    BoxComponent(
+                        layout='horizontal',
+                        contents=[
+                            TextComponent(text='Lumi', align='start',
+                                          weight='regular'),
+                            TextComponent(
+                                text=str(bool(int(m_in["lumi"]))), align='end', weight='regular'),
+                        ]
+                    ),
+                ]
+            )
         )
-    )
     message = FlexSendMessage(alt_text="Status", contents=bubble)
     line_bot_api.reply_message(
         temp.reply_token,
@@ -183,8 +186,8 @@ def handle_message(event):
     cmd = text[0].lower()
     print("Got: " + text[0] + " --> " + cmd)
     if cmd == "stat":
-        mqttc.publish("/test1", cmd)
         mqttc.loop_start()
+        mqttc.publish("/test1", cmd)
         while loop_flag == 1 and count < 5:
             time.sleep(1)
             count += 1
@@ -272,6 +275,11 @@ def handle_message(event):
             }
             data_out = json.dumps(broker_out)
             mqttc.publish("/test1", data_out)
+            while loop_flag == 1 and count < 5:
+                time.sleep(1)
+                count += 1
+                print(count)
+            loop_flag = 1
             line_bot_api.reply_message(
                 temp.reply_token,
                 TextSendMessage("Values assigned")
@@ -314,8 +322,8 @@ def handle_message(event):
                 TextSendMessage("Please try again.")
             ]
         )
-    mqttc.disconnect()
-    mqttc.loop_stop()
+    #mqttc.disconnect()
+    #mqttc.loop_stop()
 
 
 if __name__ == "__main__":
