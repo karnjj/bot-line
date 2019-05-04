@@ -28,7 +28,11 @@ def on_message(client, obj, msg):
     m_in = json.loads(msg.payload)
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
     if m_in["topic"] == "active":
+<<<<<<< HEAD
         pi
+=======
+        print(m_in)
+>>>>>>> 322207584d725f0df5a25971efbe99e310c22df9
     else:
         bubble = BubbleContainer(
             direction='ltr',
@@ -187,7 +191,6 @@ def handle_message(event):
     print("Got: " + text[0] + " --> " + cmd)
     if cmd == "stat":
         mqttc.publish("/test1", cmd)
-        mqttc.loop_start()
         while loop_flag == 1 and count < 5:
             time.sleep(1)
             count += 1
@@ -317,9 +320,10 @@ def handle_message(event):
                 TextSendMessage("Please try again.")
             ]
         )
-    mqttc.disconnect()
-    mqttc.loop_stop()
+    #mqttc.disconnect()
+    #mqttc.loop_stop()
 
 
 if __name__ == "__main__":
+    mqttc.loop_start()
     app.run()
