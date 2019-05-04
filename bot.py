@@ -176,7 +176,6 @@ def handle_message(event):
     global temp, loop_flag
     count = 0
     print(event)
-    mqttc.loop_start()
     cfg.read('config.ini')
     temp = event
     mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
@@ -322,4 +321,5 @@ def handle_message(event):
 
 
 if __name__ == "__main__":
+    mqttc.loop_start()
     app.run()
