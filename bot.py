@@ -28,11 +28,7 @@ def on_message(client, obj, msg):
     m_in = json.loads(msg.payload)
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
     if m_in["topic"] == "active":
-<<<<<<< HEAD
-        pi
-=======
         print(m_in)
->>>>>>> 322207584d725f0df5a25971efbe99e310c22df9
     else:
         bubble = BubbleContainer(
             direction='ltr',
