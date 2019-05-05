@@ -278,11 +278,11 @@ def handle_message(event):
                 "lumi": cfg['configData']['lumi']
             }
             data_out = json.dumps(broker_out)
-            mqttc.publish("/test1", data_out)
             line_bot_api.reply_message(
                 temp.reply_token,
                 TextSendMessage("Values assigned")
             )
+            mqttc.publish("/test1", data_out)
             mqttc.loop_start()
             while loop_flag == 1 and count < 15:
                 time.sleep(1)
