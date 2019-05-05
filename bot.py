@@ -181,7 +181,7 @@ def callback():
 def handle_message(event):
     global temp, loop_flag
     count = 0
-    print(event)
+    print(type(event))
     cfg.read('config.ini')
     temp = event
     src = temp["source"]
