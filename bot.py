@@ -182,7 +182,7 @@ def handle_message(event):
     global temp, loop_flag
     count = 0
     print((str(event)))
-    print(event.source.userId)
+    print(event.source)
     cfg.read('config.ini')
     temp = event
     mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
