@@ -142,7 +142,7 @@ mqttc.on_subscribe = on_subscribe
 mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
 mqttc.connect('m15.cloudmqtt.com',  17711)
 mqttc.subscribe("/test2", 0)
-mqttc.loop_start()
+
 # Connect firebase
 cred = credentials.Certificate(
     "pocket-farm-b1970-firebase-adminsdk-sfo2w-db33ced3fd.json")
@@ -152,7 +152,7 @@ db = firestore.client()
 line_bot_api = LineBotApi(cfg.get('LineServer', 'Channel_token'))
 handler = WebhookHandler(cfg.get('LineServer', 'Channel_secret'))
 
-# app = Flask(__name__)
+app = Flask(__name__)
 
 
 @app.route("/")
@@ -339,6 +339,6 @@ def handle_message(event):
     mqttc.loop_stop()
     """
 
-
+mqttc.loop()
 #app.run()
 #mqttc.loop_stop()
