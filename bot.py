@@ -339,5 +339,5 @@ def handle_message(event):
     """
 
 mqttc.loop_start()
-app.run()
-mqttc.loop_stop()
+#app.run()
+#mqttc.loop_stop()
