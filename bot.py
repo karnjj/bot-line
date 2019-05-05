@@ -34,7 +34,9 @@ def on_message(client, obj, msg):
             txt = m_in["what"] + " active"
         src = temp.source.type
         if(src == "room") :
-            line_bot_api.push_message(temp.source.roomid, TextSendMessage(text=txt))
+            line_bot_api.push_message(temp.source.room_id, TextSendMessage(text=txt))
+        else :
+            line_bot_api.push_message(temp.source.user_id, TextSendMessage(text=txt))
     elif m_in["topic"] == "stat":
         bubble = BubbleContainer(
             direction='ltr',
