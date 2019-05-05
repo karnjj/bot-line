@@ -182,18 +182,16 @@ def handle_message(event):
     print(event)
     cfg.read('config.ini')
     temp = event
-    '''
     mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
     mqttc.connect('m15.cloudmqtt.com',  17711)
     mqttc.subscribe("/test2", 0)
-    '''
     text = event.message.text
     text = text.split()
     cmd = text[0].lower()
     print("Got: " + text[0] + " --> " + cmd)
     if cmd == "stat":
-        mqttc.loop_start()
         mqttc.publish("/test1", cmd)
+        mqttc.loop_start()
         while loop_flag == 1 and count < 5:
             time.sleep(1)
             count += 1
