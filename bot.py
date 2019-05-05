@@ -170,21 +170,22 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    mqttc.loop_start()
     global temp, loop_flag
     count = 0
     print(event)
     cfg.read('config.ini')
     temp = event
+    '''
     mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
     mqttc.connect('m15.cloudmqtt.com',  17711)
     mqttc.subscribe("/test2", 0)
+    '''
     text = event.message.text
     text = text.split()
     cmd = text[0].lower()
     print("Got: " + text[0] + " --> " + cmd)
     if cmd == "stat":
-        mqttc.publish("/test1", cmd)
-        mqttc.loop_start()
         while loop_flag == 1 and count < 5:
             time.sleep(1)
             count += 1
@@ -270,13 +271,6 @@ def handle_message(event):
                 "mois": cfg['configData']['mois'],
                 "lumi": cfg['configData']['lumi']
             }
-            data_out = json.dumps(broker_out)
-            mqttc.publish("/test1", data_out)
-            while loop_flag == 1 and count < 5:
-                time.sleep(1)
-                count += 1
-                print(count)
-            loop_flag = 1
             line_bot_api.reply_message(
                 temp.reply_token,
                 TextSendMessage("Values assigned")
