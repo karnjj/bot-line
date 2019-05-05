@@ -32,7 +32,10 @@ def on_message(client, obj, msg):
             txt = m_in["what"] + " deactive"
         else:
             txt = m_in["what"] + " active"
-        line_bot_api.push_message("R5be85fdf8ab522a87e3116d9ed9365f4", TextSendMessage(text=txt))
+        type = temp["source"]["type"]+"Id"
+        anyid = temp["source"][type]
+        print(anyid)
+        line_bot_api.push_message(anyid, TextSendMessage(text=txt))
     elif m_in["topic"] == "stat":
         bubble = BubbleContainer(
             direction='ltr',
