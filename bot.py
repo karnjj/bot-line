@@ -28,7 +28,7 @@ def on_message(client, obj, msg):
     m_in = json.loads(msg.payload)
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
     if m_in["topic"] == "active":
-        if m_in["value"] == "false":
+        if m_in["value"] == False:
             txt = m_in["what"] + " deactive"
         else:
             txt = m_in["what"] + " active"
