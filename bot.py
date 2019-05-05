@@ -107,12 +107,12 @@ def on_message(client, obj, msg):
                 ]
             )
         )
-    message = FlexSendMessage(alt_text="Status", contents=bubble)
-    line_bot_api.reply_message(
-        temp.reply_token,
-        message
-    )
-    loop_flag = 0
+        message = FlexSendMessage(alt_text="Status", contents=bubble)
+        line_bot_api.reply_message(
+            temp.reply_token,
+            message
+            )
+        loop_flag = 0
 
 
 def on_publish(client, obj, mid):
@@ -288,7 +288,7 @@ def handle_message(event):
             )
             mqttc.publish("/test1", data_out)
             mqttc.loop_start()
-            while loop_flag == 1 and count < 8:
+            while loop_flag == 1 and count < 10:
                 time.sleep(1)
                 count += 1
                 print(count)
