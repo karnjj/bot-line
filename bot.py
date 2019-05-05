@@ -177,7 +177,6 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    mqttc.loop_start()
     global temp, loop_flag
     count = 0
     print(event)
@@ -193,6 +192,7 @@ def handle_message(event):
     cmd = text[0].lower()
     print("Got: " + text[0] + " --> " + cmd)
     if cmd == "stat":
+        mqttc.loop_start()
         mqttc.publish("/test1", cmd)
         while loop_flag == 1 and count < 5:
             time.sleep(1)
@@ -285,6 +285,7 @@ def handle_message(event):
                 temp.reply_token,
                 TextSendMessage("Values assigned")
             )
+            mqttc.loop_start()
             while loop_flag == 1 and count < 8:
                 time.sleep(1)
                 count += 1
