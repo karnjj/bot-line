@@ -11,7 +11,7 @@ from configparser import ConfigParser
 import time
 import datetime
 import threading
-_APP_VERSION_ = "2.11"
+_APP_VERSION_ = "2.21"
 cfg = ConfigParser()
 cfg.read('config.ini')
 loop_flag = 1
@@ -29,9 +29,9 @@ def on_message(client, obj, msg):
     print(msg.topic + " " + str(msg.qos) + " " + str(msg.payload))
     if m_in["topic"] == "active":
         if m_in["value"] == False:
-            txt = m_in["what"] + " deactive"
+            txt = m_in["what"] + " deactived"
         else:
-            txt = m_in["what"] + " active"
+            txt = m_in["what"] + " actived"
         src = temp.source.type
         if(src == "room") :
             line_bot_api.push_message(temp.source.room_id, TextSendMessage(text=txt))
