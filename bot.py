@@ -16,8 +16,23 @@ cfg = ConfigParser()
 cfg.read('config.ini')
 loop_flag = 1
 
-# Define event callbacks
+# Connect Line
+line_bot_api = LineBotApi(cfg.get('LineServer', 'Channel_token'))
+handler = WebhookHandler(cfg.get('LineServer', 'Channel_secret'))
 
+app = Flask(__name__)
+# Define event callbacks
+cred = credentials.Certificate(
+    "pocket-farm-b1970-firebase-adminsdk-sfo2w-db33ced3fd.json")
+firebase_admin.initialize_app(cred)
+db = firestore.client()
+
+
+# Connect MQTT Could
+mqttc = mqtt.Client()
+mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
+mqttc.connect('m15.cloudmqtt.com',  17711)
+mqttc.subscribe("/test2", 0)
 
 def on_connect(client, userdata, flags, rc):
     print("rc: " + str(rc))
@@ -126,6 +141,11 @@ def on_subscribe(client, obj, mid, granted_qos):
 def on_log(client, obj, level, string):
     print(string)
 
+# Assign event callbacks
+mqttc.on_message = on_message
+mqttc.on_connect = on_connect
+mqttc.on_publish = on_publish
+mqttc.on_subscribe = on_subscribe
 
 def savedata(data):
     with open('config.ini', 'w') as configfile:
@@ -317,27 +337,6 @@ def handle_message(event):
     # """
 
 # Connect firebase
-cred = credentials.Certificate(
-    "pocket-farm-b1970-firebase-adminsdk-sfo2w-db33ced3fd.json")
-firebase_admin.initialize_app(cred)
-db = firestore.client()
-
-# Connect Line
-line_bot_api = LineBotApi(cfg.get('LineServer', 'Channel_token'))
-handler = WebhookHandler(cfg.get('LineServer', 'Channel_secret'))
-app = Flask(__name__)
-
-mqttc = mqtt.Client()
-# Assign event callbacks
-mqttc.on_message = on_message
-mqttc.on_connect = on_connect
-mqttc.on_publish = on_publish
-mqttc.on_subscribe = on_subscribe
-# Connect MQTT Could
-mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
-mqttc.connect('m15.cloudmqtt.com',  17711)
-mqttc.subscribe("/test2", 0)
-
 mqttc.loop_start()
 #app.run()
 #mqttc.loop_stop()
