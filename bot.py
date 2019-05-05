@@ -276,6 +276,11 @@ def handle_message(event):
                 temp.reply_token,
                 TextSendMessage("Values assigned")
             )
+            while loop_flag == 1 and count < 8:
+                time.sleep(1)
+                count += 1
+                print(count)
+            loop_flag = 1
             cfg['configData']['flag_update'] = 'False'
             savedata(cfg)
         else:
