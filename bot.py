@@ -337,6 +337,7 @@ def handle_message(event):
     # """
 
 # Connect firebase
+print("first")
 mqttc.loop_start()
 #app.run()
 #mqttc.loop_stop()
