@@ -184,7 +184,6 @@ def handle_message(event):
     print(list(event))
     cfg.read('config.ini')
     temp = event
-    print(source)
     mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
     mqttc.connect('m15.cloudmqtt.com',  17711)
     mqttc.subscribe("/test2", 0)
