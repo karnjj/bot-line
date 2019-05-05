@@ -284,7 +284,7 @@ def handle_message(event):
                 TextSendMessage("Values assigned")
             )
             mqttc.loop_start()
-            while loop_flag == 1 and count < 8:
+            while loop_flag == 1 and count < 15:
                 time.sleep(1)
                 count += 1
                 print(count)
