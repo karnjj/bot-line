@@ -338,8 +338,6 @@ def handle_message(event):
     mqttc.loop_stop()
     """
 
-
-if __name__ == "__main__":
-    mqttc.loop_start()
-    app.run()
-    mqttc.loop_stop()
+mqttc.loop_start()
+app.run()
+mqttc.loop_stop()
