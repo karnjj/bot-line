@@ -132,29 +132,6 @@ def savedata(data):
         data.write(configfile)
 
 
-mqttc = mqtt.Client()
-# Assign event callbacks
-mqttc.on_message = on_message
-mqttc.on_connect = on_connect
-mqttc.on_publish = on_publish
-mqttc.on_subscribe = on_subscribe
-# Connect MQTT Could
-mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
-mqttc.connect('m15.cloudmqtt.com',  17711)
-mqttc.subscribe("/test2", 0)
-
-# Connect firebase
-cred = credentials.Certificate(
-    "pocket-farm-b1970-firebase-adminsdk-sfo2w-db33ced3fd.json")
-firebase_admin.initialize_app(cred)
-db = firestore.client()
-# Connect Line
-line_bot_api = LineBotApi(cfg.get('LineServer', 'Channel_token'))
-handler = WebhookHandler(cfg.get('LineServer', 'Channel_secret'))
-
-app = Flask(__name__)
-
-
 @app.route("/")
 def hello():
     return "Welcome to my line bot"
@@ -334,12 +311,33 @@ def handle_message(event):
                 TextSendMessage("Please try again.")
             ]
         )
-    """
-    mqttc.disconnect()
-    mqttc.loop_stop()
-    """
+    # """
+    # mqttc.disconnect()
+    # mqttc.loop_stop()
+    # """
 
-while True:
-    mqttc.loop()
+# Connect firebase
+cred = credentials.Certificate(
+    "pocket-farm-b1970-firebase-adminsdk-sfo2w-db33ced3fd.json")
+firebase_admin.initialize_app(cred)
+db = firestore.client()
+
+# Connect Line
+line_bot_api = LineBotApi(cfg.get('LineServer', 'Channel_token'))
+handler = WebhookHandler(cfg.get('LineServer', 'Channel_secret'))
+app = Flask(__name__)
+
+mqttc = mqtt.Client()
+# Assign event callbacks
+mqttc.on_message = on_message
+mqttc.on_connect = on_connect
+mqttc.on_publish = on_publish
+mqttc.on_subscribe = on_subscribe
+# Connect MQTT Could
+mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
+mqttc.connect('m15.cloudmqtt.com',  17711)
+mqttc.subscribe("/test2", 0)
+
+mqttc.loop_start()
 #app.run()
 #mqttc.loop_stop()
