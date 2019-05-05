@@ -284,7 +284,7 @@ def handle_message(event):
             )
             mqttc.publish("/test1", data_out)
             mqttc.loop_start()
-            while loop_flag == 1 and count < 15:
+            while loop_flag == 1 and count < 8:
                 time.sleep(1)
                 count += 1
                 print(count)
