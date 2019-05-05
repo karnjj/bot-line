@@ -32,9 +32,9 @@ def on_message(client, obj, msg):
             txt = m_in["what"] + " deactive"
         else:
             txt = m_in["what"] + " active"
-        src = temp["source"]
-        print(source)
-        line_bot_api.push_message(anyid, TextSendMessage(text=txt))
+        src = temp.source.type
+        if(src == "room") :
+            line_bot_api.push_message(temp.source.roomid, TextSendMessage(text=txt))
     elif m_in["topic"] == "stat":
         bubble = BubbleContainer(
             direction='ltr',
@@ -181,8 +181,7 @@ def callback():
 def handle_message(event):
     global temp, loop_flag
     count = 0
-    print((str(event)))
-    print(event.source.type)
+    print(event.source.userid)
     cfg.read('config.ini')
     temp = event
     mqttc.username_pw_set("brsiutlc", "Rw4rcSFm_gCL")
