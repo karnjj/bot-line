@@ -279,6 +279,8 @@ def handle_message(event):
                 "mois": cfg['configData']['mois'],
                 "lumi": cfg['configData']['lumi']
             }
+            data_out = json.dumps(broker_out)
+            mqttc.publish("/test2", data_out)
             line_bot_api.reply_message(
                 temp.reply_token,
                 TextSendMessage("Values assigned")
